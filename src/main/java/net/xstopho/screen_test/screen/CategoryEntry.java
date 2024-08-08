@@ -25,21 +25,26 @@ public class CategoryEntry extends ContainerObjectSelectionList.Entry<CategoryEn
     private final Font font = Minecraft.getInstance().font;
 
     public EditBox editBox;
-    public Button button;
+    public Button resetButton, undoButton;
+
+    private final int EDIT_BOX_WIDTH = 150;
 
     public CategoryEntry(Component category) {
         this.category = category;
     }
 
     public CategoryEntry(Component tabTitle, String entryTitle) {
-        this.editBox = new EditBox(font, 0, 0, 150, 18, Component.literal(entryTitle));
+        this.editBox = new EditBox(font, 0, 0, EDIT_BOX_WIDTH, 18, Component.literal(entryTitle));
         this.editBox.setValue("TEST");
 
-        this.button = Button.builder(Component.literal(entryTitle), onPress -> ScreenTest.LOGGER.error("Button from Entry '{}' was pressed", entryTitle)).bounds(0, 0, 50, 20).build();
+        this.resetButton = Button.builder(Component.literal("R"), button -> ScreenTest.LOGGER.error("Reset Value!")).bounds(0, 0, 20, 20).build();
+        this.undoButton = Button.builder(Component.literal("U"), button -> ScreenTest.LOGGER.error("Undo Value changes!")).bounds(0, 0, 20, 20).build();
+
         this.label = Component.literal(tabTitle.getString() + " " + entryTitle);
 
         this.children.add(editBox);
-        this.children.add(button);
+        this.children.add(resetButton);
+        this.children.add(undoButton);
     }
 
     @Override
@@ -49,19 +54,23 @@ public class CategoryEntry extends ContainerObjectSelectionList.Entry<CategoryEn
                     xPos + (entryWidth / 2) - (font.width(category.getString()) / 2), yPos + 6, mouseX, mouseY, hovered);
         }
 
-        if (editBox != null && button != null) {
+        if (editBox != null && resetButton != null && undoButton != null) {
             drawStringWithTooltip(guiGraphics, label, Component.literal("This is a Config Entry Tooltip to explain the Setting."), xPos, yPos + 6, mouseX, mouseY, hovered);
 
-            editBox.setX(xPos + entryWidth - 150);
+            editBox.setX(xPos + entryWidth - EDIT_BOX_WIDTH);
             editBox.setY(yPos + 1);
 
-            button.setX(xPos + entryWidth - button.getWidth() - 2);
-            button.setY(yPos);
+            undoButton.setX(xPos + entryWidth - undoButton.getWidth() - resetButton.getWidth());
+            undoButton.setY(yPos);
 
-            editBox.setWidth(150 - button.getWidth() - 2);
+            resetButton.setX(xPos + entryWidth - undoButton.getWidth());
+            resetButton.setY(yPos);
+
+            editBox.setWidth(EDIT_BOX_WIDTH - (undoButton.getWidth() + resetButton.getWidth()) - 1);
 
             editBox.render(guiGraphics, mouseX, mouseY, partialTick);
-            button.render(guiGraphics, mouseX, mouseY, partialTick);
+            resetButton.render(guiGraphics, mouseX, mouseY, partialTick);
+            undoButton.render(guiGraphics, mouseX, mouseY, partialTick);
         }
     }
 

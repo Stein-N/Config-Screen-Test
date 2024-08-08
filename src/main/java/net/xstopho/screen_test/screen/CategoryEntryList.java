@@ -22,8 +22,12 @@ public class CategoryEntryList extends ContainerObjectSelectionList<CategoryEntr
         var entry = this.getHovered();
         if (entry != null) {
             if (entry instanceof CategoryEntry categoryEntry) {
-                if (categoryEntry.button != null && categoryEntry.button.isHovered()) {
-                    tab.getScreen().setTooltipForNextRenderPass(Component.literal("Tooltip for a Button!"));
+                if (categoryEntry.resetButton != null && categoryEntry.resetButton.isHovered()) {
+                    tab.getScreen().setTooltipForNextRenderPass(Component.literal("Reset to the default Value!"));
+                    return;
+                }
+                if (categoryEntry.undoButton != null && categoryEntry.undoButton.isHovered()) {
+                    tab.getScreen().setTooltipForNextRenderPass(Component.literal("Undo your changes to the Value!"));
                     return;
                 }
                 if (categoryEntry.editBox != null && categoryEntry.editBox.isHovered()) {
