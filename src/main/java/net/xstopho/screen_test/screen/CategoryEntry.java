@@ -1,6 +1,7 @@
 package net.xstopho.screen_test.screen;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Button;
@@ -16,15 +17,23 @@ import java.util.List;
 
 public class CategoryEntry extends ContainerObjectSelectionList.Entry<CategoryEntry> {
 
-    private final Component label;
+    private Component label;
+    private Component category;
 
     private final List<AbstractWidget> children = new ArrayList<>();
+    private final Font font = Minecraft.getInstance().font;
 
-    private final EditBox editBox;
-    private final Button button;
+    private EditBox editBox;
+    private Button button;
+
+    public CategoryEntry(Component category) {
+        this.category = category;
+    }
 
     public CategoryEntry(Component tabTitle, String entryTitle) {
-        this.editBox = new EditBox(Minecraft.getInstance().font, 0, 0, 150, 18, Component.literal(entryTitle));
+        this.editBox = new EditBox(font, 0, 0, 150, 18, Component.literal(entryTitle));
+        this.editBox.setValue("TEST");
+
         this.button = Button.builder(Component.literal(entryTitle), onPress -> ScreenTest.LOGGER.error("Button from Entry '{}' was pressed", entryTitle)).bounds(0, 0, 50, 20).build();
         this.label = Component.literal(tabTitle.getString() + " " + entryTitle);
 
@@ -34,18 +43,24 @@ public class CategoryEntry extends ContainerObjectSelectionList.Entry<CategoryEn
 
     @Override
     public void render(GuiGraphics guiGraphics, int index, int yPos, int xPos, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float partialTick) {
-        guiGraphics.drawString(Minecraft.getInstance().font, label, xPos, yPos + 5, -1, false);
+        if (category != null) {
+            guiGraphics.drawString(font, category, xPos + (entryWidth / 2) - (font.width(category.getString()) / 2), yPos + 6, -1, false);
+        }
 
-        editBox.setX(xPos + entryWidth - 158);
-        editBox.setY(yPos + 1);
+        if (editBox != null && button != null) {
+            guiGraphics.drawString(font, label, xPos, yPos + 6, -1, false);
 
-        button.setX(xPos + entryWidth - button.getWidth() - 2);
-        button.setY(yPos);
+            editBox.setX(xPos + entryWidth - 150);
+            editBox.setY(yPos + 1);
 
-        editBox.setWidth(158 - button.getWidth() - 2);
+            button.setX(xPos + entryWidth - button.getWidth() - 2);
+            button.setY(yPos);
 
-        editBox.render(guiGraphics, mouseX, mouseY, partialTick);
-        button.render(guiGraphics, mouseX, mouseY, partialTick);
+            editBox.setWidth(150 - button.getWidth() - 2);
+
+            editBox.render(guiGraphics, mouseX, mouseY, partialTick);
+            button.render(guiGraphics, mouseX, mouseY, partialTick);
+        }
     }
 
     @Override
