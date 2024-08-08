@@ -1,8 +1,8 @@
 package net.xstopho.screen_test.screen;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.ContainerObjectSelectionList;
 import net.minecraft.client.gui.components.EditBox;
@@ -11,6 +11,7 @@ import net.minecraft.client.gui.narration.NarratableEntry;
 import net.minecraft.network.chat.Component;
 import net.xstopho.screen_test.ScreenTest;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CategoryEntry extends ContainerObjectSelectionList.Entry<CategoryEntry> {
@@ -18,14 +19,25 @@ public class CategoryEntry extends ContainerObjectSelectionList.Entry<CategoryEn
     private final String entryTitle;
     private final Component tabTitle;
 
+    private final List<AbstractWidget> children = new ArrayList<>();
+
+    private final EditBox editBox;
+    private final Button button;
+
     public CategoryEntry(Component tabTitle, String entryTitle) {
         this.entryTitle = entryTitle;
         this.tabTitle = tabTitle;
+
+        this.editBox = new EditBox(Minecraft.getInstance().font, 0, 0, 150, 18, Component.literal(entryTitle));
+        this.button = Button.builder(Component.literal(entryTitle), onPress -> ScreenTest.LOGGER.error("Button from Entry '{}' was pressed", entryTitle)).bounds(0, 0, 50, 20).build();
+
+        this.children.add(editBox);
+        this.children.add(button);
     }
 
     @Override
     public List<? extends NarratableEntry> narratables() {
-        return List.of();
+        return this.children;
     }
 
     @Override
@@ -33,9 +45,6 @@ public class CategoryEntry extends ContainerObjectSelectionList.Entry<CategoryEn
         Component label = Component.literal(tabTitle.getString() + " " + entryTitle);
 
         guiGraphics.drawString(Minecraft.getInstance().font, label, xPos, yPos + 5, -1, false);
-
-        EditBox editBox = new EditBox(Minecraft.getInstance().font, 0, 0, 150, 18, Component.literal(entryTitle));
-        Button button = Button.builder(Component.literal(entryTitle), onPress -> ScreenTest.LOGGER.error("Button from Entry '{}' was pressed", entryTitle)).bounds(0, 0, 50, 20).build();
 
         editBox.setX(xPos + entryWidth - 158);
         editBox.setY(yPos + 1);
@@ -51,6 +60,6 @@ public class CategoryEntry extends ContainerObjectSelectionList.Entry<CategoryEn
 
     @Override
     public List<? extends GuiEventListener> children() {
-        return List.of();
+        return this.children;
     }
 }
