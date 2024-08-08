@@ -27,7 +27,7 @@ public class CategoryTab implements Tab {
     protected List<CategoryEntry> createEntries() {
         List<CategoryEntry> entries = new LinkedList<>();
 
-        for (int i = 0; i <= 50; i++) entries.add(new CategoryEntry(component, "Entry " + i));
+        for (int i = 0; i <= 25; i++) entries.add(new CategoryEntry(component, "Entry " + i));
 
         return entries;
     }
