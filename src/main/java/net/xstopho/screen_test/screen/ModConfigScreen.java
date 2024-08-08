@@ -1,9 +1,11 @@
 package net.xstopho.screen_test.screen;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.tabs.TabManager;
 import net.minecraft.client.gui.components.tabs.TabNavigationBar;
+import net.minecraft.client.gui.layouts.HeaderAndFooterLayout;
 import net.minecraft.client.gui.navigation.ScreenRectangle;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
@@ -11,6 +13,7 @@ import net.minecraft.network.chat.Component;
 public class ModConfigScreen extends Screen {
 
     private final Screen previous;
+    private final HeaderAndFooterLayout layout;
 
     private final TabManager tabManager;
     private final String[] tabs = { "Common", "Client", "Server" };
@@ -19,6 +22,7 @@ public class ModConfigScreen extends Screen {
     public ModConfigScreen(Screen previous, Component component) {
         super(component);
         this.previous = previous;
+        this.layout = new HeaderAndFooterLayout(this, 32, 32);
 
         tabManager = new TabManager(this::addRenderableWidget, this::removeWidget);
     }
@@ -40,6 +44,9 @@ public class ModConfigScreen extends Screen {
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float ticks) {
         this.renderBackground(guiGraphics, mouseX, mouseY, ticks);
         super.render(guiGraphics, mouseX, mouseY, ticks);
+        RenderSystem.enableBlend();
+        guiGraphics.blit(Screen.FOOTER_SEPARATOR, 0, this.height - getHeaderHeight(), 0.0F, 0.0F, this.width, 2, 32, 2);
+        RenderSystem.disableBlend();
     }
 
     @Override
@@ -57,8 +64,14 @@ public class ModConfigScreen extends Screen {
             this.tabNavigationBar.setWidth(this.width);
             this.tabNavigationBar.arrangeElements();
             int i = this.tabNavigationBar.getRectangle().bottom();
-            ScreenRectangle screenRectangle = new ScreenRectangle(0, i, this.width, this.height - i);
+            ScreenRectangle screenRectangle = new ScreenRectangle(0, i, this.width, this.height - (i * 2));
             this.tabManager.setTabArea(screenRectangle);
+            this.layout.setHeaderHeight(i);
+            this.layout.arrangeElements();
         }
+    }
+
+    public int getHeaderHeight() {
+        return this.layout.getHeaderHeight();
     }
 }
