@@ -30,12 +30,10 @@ public class CategoryTab implements Tab {
     protected List<CategoryEntry> createEntries() {
         List<CategoryEntry> entries = new LinkedList<>();
 
-        for (int i = 0; i <= 25; i++) {
-            if (i % 2 == 0) entries.add(new CategoryEntry(Component.literal("Test Category").withStyle(ChatFormatting.GOLD)));
-            else {
-                for (int j = 0; j <= 3; j++) {
-                    entries.add(new CategoryEntry(component, "Entry " + i * j));
-                }
+        for (int i = 0; i <= 4; i++) {
+            entries.add(new CategoryEntry(Component.literal("Test Category").withStyle(ChatFormatting.GOLD)));
+            for (int j = 0; j <= 2; j++) {
+                entries.add(new CategoryEntry(component, "Entry " + i * j));
             }
         }
         return entries;
