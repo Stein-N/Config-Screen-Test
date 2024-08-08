@@ -10,6 +10,7 @@ import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.narration.NarratableEntry;
 import net.minecraft.network.chat.Component;
+import net.minecraft.util.FormattedCharSequence;
 import net.xstopho.screen_test.ScreenTest;
 
 import java.util.ArrayList;
@@ -17,14 +18,14 @@ import java.util.List;
 
 public class CategoryEntry extends ContainerObjectSelectionList.Entry<CategoryEntry> {
 
-    private Component label;
-    private Component category;
+    public Component label;
+    public Component category;
 
     private final List<AbstractWidget> children = new ArrayList<>();
     private final Font font = Minecraft.getInstance().font;
 
-    private EditBox editBox;
-    private Button button;
+    public EditBox editBox;
+    public Button button;
 
     public CategoryEntry(Component category) {
         this.category = category;
@@ -44,11 +45,12 @@ public class CategoryEntry extends ContainerObjectSelectionList.Entry<CategoryEn
     @Override
     public void render(GuiGraphics guiGraphics, int index, int yPos, int xPos, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float partialTick) {
         if (category != null) {
-            guiGraphics.drawString(font, category, xPos + (entryWidth / 2) - (font.width(category.getString()) / 2), yPos + 6, -1, false);
+            drawStringWithTooltip(guiGraphics, category, Component.literal("This is Category Tooltip. Possibly for more Information."),
+                    xPos + (entryWidth / 2) - (font.width(category.getString()) / 2), yPos + 6, mouseX, mouseY, hovered);
         }
 
         if (editBox != null && button != null) {
-            guiGraphics.drawString(font, label, xPos, yPos + 6, -1, false);
+            drawStringWithTooltip(guiGraphics, label, Component.literal("This is a Config Entry Tooltip to explain the Setting."), xPos, yPos + 6, mouseX, mouseY, hovered);
 
             editBox.setX(xPos + entryWidth - 150);
             editBox.setY(yPos + 1);
@@ -60,6 +62,19 @@ public class CategoryEntry extends ContainerObjectSelectionList.Entry<CategoryEn
 
             editBox.render(guiGraphics, mouseX, mouseY, partialTick);
             button.render(guiGraphics, mouseX, mouseY, partialTick);
+        }
+    }
+
+    private void drawStringWithTooltip(GuiGraphics guiGraphics, Component component, Component tooltip, int xPos, int yPos, int mouseX, int mouseY, boolean hovered) {
+        if (component != null) {
+            guiGraphics.drawString(font, component, xPos, yPos, -1, false);
+            if (hovered) {
+                int xMax = xPos + font.width(component.getString());
+                int yMax = yPos + font.lineHeight;
+                if (xPos <= mouseX && xMax >= mouseX && yPos <= mouseY && yMax >= mouseY) {
+                    guiGraphics.renderTooltip(font, splitTooltip(tooltip), mouseX, mouseY);
+                }
+            }
         }
     }
 
@@ -88,5 +103,9 @@ public class CategoryEntry extends ContainerObjectSelectionList.Entry<CategoryEn
     @Override
     public List<? extends GuiEventListener> children() {
         return this.children;
+    }
+
+    private List<FormattedCharSequence> splitTooltip(Component component) {
+        return font.split(component, 170);
     }
 }

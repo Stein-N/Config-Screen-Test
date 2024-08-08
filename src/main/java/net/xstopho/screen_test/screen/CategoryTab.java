@@ -17,12 +17,14 @@ public class CategoryTab implements Tab {
     protected final CategoryEntryList list;
 
     private final Component component;
+    private final Screen screen;
 
     public CategoryTab(Screen screen, Component component) {
         this.component = component;
+        this.screen = screen;
 
-        this.list = new CategoryEntryList(Minecraft.getInstance(), screen.width,
-                screen.height, 0, 24, createEntries());
+        this.list = new CategoryEntryList(this, Minecraft.getInstance(), this.screen.width,
+                this.screen.height, 0, 24, createEntries());
     }
 
     protected List<CategoryEntry> createEntries() {
@@ -36,7 +38,6 @@ public class CategoryTab implements Tab {
                 }
             }
         }
-
         return entries;
     }
 
@@ -53,5 +54,9 @@ public class CategoryTab implements Tab {
     @Override
     public void doLayout(ScreenRectangle screenRectangle) {
         this.list.setRectangle(screenRectangle.width(), screenRectangle.height(), screenRectangle.left(), screenRectangle.top());
+    }
+
+    public Screen getScreen() {
+        return screen;
     }
 }
