@@ -16,8 +16,7 @@ import java.util.List;
 
 public class CategoryEntry extends ContainerObjectSelectionList.Entry<CategoryEntry> {
 
-    private final String entryTitle;
-    private final Component tabTitle;
+    private final Component label;
 
     private final List<AbstractWidget> children = new ArrayList<>();
 
@@ -25,25 +24,16 @@ public class CategoryEntry extends ContainerObjectSelectionList.Entry<CategoryEn
     private final Button button;
 
     public CategoryEntry(Component tabTitle, String entryTitle) {
-        this.entryTitle = entryTitle;
-        this.tabTitle = tabTitle;
-
         this.editBox = new EditBox(Minecraft.getInstance().font, 0, 0, 150, 18, Component.literal(entryTitle));
         this.button = Button.builder(Component.literal(entryTitle), onPress -> ScreenTest.LOGGER.error("Button from Entry '{}' was pressed", entryTitle)).bounds(0, 0, 50, 20).build();
+        this.label = Component.literal(tabTitle.getString() + " " + entryTitle);
 
         this.children.add(editBox);
         this.children.add(button);
     }
 
     @Override
-    public List<? extends NarratableEntry> narratables() {
-        return this.children;
-    }
-
-    @Override
     public void render(GuiGraphics guiGraphics, int index, int yPos, int xPos, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float partialTick) {
-        Component label = Component.literal(tabTitle.getString() + " " + entryTitle);
-
         guiGraphics.drawString(Minecraft.getInstance().font, label, xPos, yPos + 5, -1, false);
 
         editBox.setX(xPos + entryWidth - 158);
@@ -57,6 +47,28 @@ public class CategoryEntry extends ContainerObjectSelectionList.Entry<CategoryEn
         editBox.render(guiGraphics, mouseX, mouseY, partialTick);
         button.render(guiGraphics, mouseX, mouseY, partialTick);
     }
+
+    @Override
+    public boolean keyPressed(int keyCode, int scanCode, int modifier) {
+        if (this.getFocused() instanceof EditBox) {
+            return this.getFocused().keyPressed(keyCode, scanCode, modifier);
+        }
+        return super.keyPressed(keyCode, scanCode, modifier);
+    }
+
+    @Override
+    public boolean charTyped(char c, int i) {
+        if (this.getFocused() instanceof EditBox) {
+            return this.getFocused().charTyped(c, i);
+        }
+        return false;
+    }
+
+    @Override
+    public List<? extends NarratableEntry> narratables() {
+        return this.children;
+    }
+
 
     @Override
     public List<? extends GuiEventListener> children() {

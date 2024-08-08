@@ -44,11 +44,10 @@ public class ModConfigScreen extends Screen {
 
     @Override
     public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
-        if (this.shouldCloseOnEsc()) {
+        if (keyCode == 256 && this.shouldCloseOnEsc()) {
             Minecraft.getInstance().setScreen(previous);
             return true;
         }
-
         return super.keyPressed(keyCode, scanCode, modifiers);
     }
 
