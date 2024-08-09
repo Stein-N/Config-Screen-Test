@@ -41,8 +41,8 @@ public class TestConfigEntry<T> implements Supplier<T> {
         }
     }
 
-    public static class BooleanEntry extends TestConfigEntry<BooleanEntry> {
-        public BooleanEntry(BooleanEntry defaultValue, BooleanEntry configValue) {
+    public static class BooleanEntry extends TestConfigEntry<Boolean> {
+        public BooleanEntry(Boolean defaultValue, Boolean configValue) {
             super(defaultValue, configValue);
         }
     }

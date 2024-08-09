@@ -20,6 +20,7 @@ public abstract class ValueEntry extends BaseEntry {
     private final Component resetTooltip = Component.translatable("screen-test.components.reset.tooltip");
 
     protected final Button undoButton, resetButton;
+    private final int valueWidgetWidth = 150;
 
     public ValueEntry(Component entryLabel, @Nullable Component entryTooltip) {
         this.entryLabel = entryLabel;
@@ -32,6 +33,14 @@ public abstract class ValueEntry extends BaseEntry {
 
         this.children.add(undoButton);
         this.children.add(resetButton);
+    }
+
+    public int getValueWidgetWidth() {
+        return valueWidgetWidth;
+    }
+
+    protected void checkUndoState(boolean bool) {
+        undoButton.active = bool;
     }
 
     protected abstract void undoChange(Button button);

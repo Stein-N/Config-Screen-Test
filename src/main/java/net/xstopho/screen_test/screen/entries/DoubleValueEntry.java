@@ -16,19 +16,16 @@ public class DoubleValueEntry extends ValueEntry {
     private final TestConfigEntry.DoubleEntry entry;
     private final EditBox editBox;
 
-    private final int EDIT_BOX_WIDTH = 150;
     private final Pattern DOUBLE_PATTERN = Pattern.compile("[0-9]{0,10}(\\.[0-9]{0,2})?");
 
     public DoubleValueEntry(Component entryLabel, @Nullable Component entryTooltip, TestConfigEntry.DoubleEntry entry) {
         super(entryLabel, entryTooltip);
         this.entry = entry;
 
-        this.editBox = new EditBox(getFont(), 0, 0, EDIT_BOX_WIDTH, 18, Component.literal(""));
+        this.editBox = new EditBox(getFont(), 0, 0, getValueWidgetWidth(), 18, Component.literal(""));
         this.editBox.setFilter(value -> DOUBLE_PATTERN.matcher(value).matches());
         this.editBox.setValue(entry.getConfigValue().toString());
-        this.editBox.setResponder(string -> {
-            this.undoButton.active = !Objects.equals(string, entry.getConfigValue().toString());
-        });
+        this.editBox.setResponder(string -> checkUndoState(!Objects.equals(string, entry.getConfigValue().toString())));
 
         this.children.add(editBox);
     }
@@ -38,7 +35,7 @@ public class DoubleValueEntry extends ValueEntry {
                        int mouseX, int mouseY, boolean hovered, float partialTick) {
         drawStringWithTooltip(guiGraphics, entryLabel, entryTooltip, xPos, yPos + 6, mouseX, mouseY, hovered);
 
-        editBox.setX(xPos + entryWidth - EDIT_BOX_WIDTH);
+        editBox.setX(xPos + entryWidth - getValueWidgetWidth());
         editBox.setY(yPos + 1);
 
         undoButton.setX(xPos + entryWidth - undoButton.getWidth() - resetButton.getWidth());
@@ -47,7 +44,7 @@ public class DoubleValueEntry extends ValueEntry {
         resetButton.setX(xPos + entryWidth - resetButton.getWidth());
         resetButton.setY(yPos);
 
-        editBox.setWidth(EDIT_BOX_WIDTH - (undoButton.getWidth() + resetButton.getWidth()) - 1);
+        editBox.setWidth(getValueWidgetWidth() - (undoButton.getWidth() + resetButton.getWidth()) - 1);
 
         editBox.render(guiGraphics, mouseX, mouseY, partialTick);
         undoButton.render(guiGraphics, mouseX, mouseY, partialTick);
