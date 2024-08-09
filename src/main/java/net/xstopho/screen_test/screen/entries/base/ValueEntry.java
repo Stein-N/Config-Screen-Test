@@ -8,7 +8,7 @@ import net.xstopho.screen_test.ScreenTest;
 import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings("all")
-public abstract class ValueEntry extends BaseEntry {
+public abstract class ValueEntry<T> extends BaseEntry {
 
     protected final Component entryLabel, entryTooltip;
 
@@ -42,6 +42,8 @@ public abstract class ValueEntry extends BaseEntry {
     protected void checkUndoState(boolean bool) {
         undoButton.active = bool;
     }
+
+    public abstract T getChangedValue();
 
     protected abstract void undoChange(Button button);
 

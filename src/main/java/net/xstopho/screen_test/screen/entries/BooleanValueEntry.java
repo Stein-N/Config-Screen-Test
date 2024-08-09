@@ -10,7 +10,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
 
-public class BooleanValueEntry extends ValueEntry {
+public class BooleanValueEntry extends ValueEntry<Boolean> {
 
     private final TestConfigEntry.BooleanEntry entry;
     private final Button entryButton;
@@ -62,6 +62,11 @@ public class BooleanValueEntry extends ValueEntry {
             buttonState = true;
         }
         checkUndoState(!Objects.equals(buttonState, entry.getConfigValue()));
+    }
+
+    @Override
+    public Boolean getChangedValue() {
+        return buttonState;
     }
 
     @Override

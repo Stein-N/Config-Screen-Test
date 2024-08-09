@@ -11,7 +11,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Objects;
 import java.util.regex.Pattern;
 
-public class IntegerValueEntry extends ValueEntry {
+public class IntegerValueEntry extends ValueEntry<Integer> {
 
     private final TestConfigEntry.IntegerEntry entry;
     private final EditBox editBox;
@@ -51,6 +51,11 @@ public class IntegerValueEntry extends ValueEntry {
         resetButton.render(guiGraphics, mouseX, mouseY, partialTick);
 
         guiGraphics.blit(undoSprite, undoButton.getX() + 3, undoButton.getY() + 3, 0.0F, 0.0F, 14, 14, 14, 14);
+    }
+
+    @Override
+    public Integer getChangedValue() {
+        return Integer.parseInt(editBox.getValue());
     }
 
     @Override
