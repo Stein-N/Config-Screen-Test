@@ -59,6 +59,11 @@ public class IntegerValueEntry extends ValueEntry<Integer> {
     }
 
     @Override
+    public boolean wasChanged() {
+        return !Objects.equals(editBox.getValue(), entry.getConfigValue().toString());
+    }
+
+    @Override
     protected void undoChange(Button button) {
         editBox.setValue(this.entry.getConfigValue().toString());
     }

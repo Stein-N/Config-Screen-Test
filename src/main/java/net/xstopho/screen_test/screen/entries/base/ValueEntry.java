@@ -45,6 +45,8 @@ public abstract class ValueEntry<T> extends BaseEntry {
 
     public abstract T getChangedValue();
 
+    public abstract boolean wasChanged();
+
     protected abstract void undoChange(Button button);
 
     protected abstract void resetValue(Button button);

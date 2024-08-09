@@ -70,6 +70,11 @@ public class BooleanValueEntry extends ValueEntry<Boolean> {
     }
 
     @Override
+    public boolean wasChanged() {
+        return !Objects.equals(buttonState, entry.getConfigValue());
+    }
+
+    @Override
     protected void undoChange(Button button) {
         entryButton.setMessage(entry.getConfigValue() ? enabled : disabled);
         buttonState = entry.getConfigValue();
