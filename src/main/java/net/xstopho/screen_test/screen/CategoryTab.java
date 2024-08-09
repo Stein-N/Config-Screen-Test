@@ -8,10 +8,7 @@ import net.minecraft.client.gui.navigation.ScreenRectangle;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.xstopho.screen_test.config.TestConfigEntry;
-import net.xstopho.screen_test.screen.entries.BooleanValueEntry;
-import net.xstopho.screen_test.screen.entries.CategoryEntry;
-import net.xstopho.screen_test.screen.entries.DoubleValueEntry;
-import net.xstopho.screen_test.screen.entries.IntegerValueEntry;
+import net.xstopho.screen_test.screen.entries.*;
 import net.xstopho.screen_test.screen.entries.base.BaseEntry;
 
 import java.util.LinkedList;
@@ -41,6 +38,8 @@ public class CategoryTab implements Tab {
             entries.add(new IntegerValueEntry(Component.literal("Integer Config Entry"), Component.literal("Explains the usage of the Config Value."), new TestConfigEntry.IntegerEntry(100, 50)));
             entries.add(new DoubleValueEntry(Component.literal("Double Config Entry"), Component.literal("Explains the usage of the Config Value."), new TestConfigEntry.DoubleEntry(2.5, 0.5)));
             entries.add(new BooleanValueEntry(Component.literal("Boolean Config Entry"), Component.literal("Explains the usage of the Config Value."), new TestConfigEntry.BooleanEntry(true, false)));
+            entries.add(new StringValueEntry(Component.literal("String Config Entry"), Component.literal("Explains the usage of the Config Value."),
+                    new TestConfigEntry.StringEntry("Hello User!", "This is you custom message.")));
         }
         return entries;
     }
