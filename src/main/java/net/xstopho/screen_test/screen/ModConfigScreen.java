@@ -1,6 +1,7 @@
 package net.xstopho.screen_test.screen;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.tabs.TabManager;
@@ -9,6 +10,12 @@ import net.minecraft.client.gui.layouts.HeaderAndFooterLayout;
 import net.minecraft.client.gui.navigation.ScreenRectangle;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
+import net.xstopho.screen_test.config.TestConfigEntry;
+import net.xstopho.screen_test.screen.entries.*;
+import net.xstopho.screen_test.screen.entries.base.BaseEntry;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ModConfigScreen extends Screen {
 
@@ -18,6 +25,8 @@ public class ModConfigScreen extends Screen {
     private final TabManager tabManager;
     private final String[] tabs = { "Common", "Client", "Server" };
     private TabNavigationBar tabNavigationBar;
+
+    private List<BaseEntry> entries = new ArrayList<>();
 
     public ModConfigScreen(Screen previous, Component component) {
         super(component);
@@ -29,15 +38,28 @@ public class ModConfigScreen extends Screen {
 
     @Override
     protected void init() {
+        createEntries();
+
         TabNavigationBar.Builder builder = TabNavigationBar.builder(this.tabManager, this.width);
 
-        for (String tab : tabs) builder.addTabs(new CategoryTab(this, Component.literal(tab)));
+        for (String tab : tabs) builder.addTabs(new CategoryTab(this, Component.literal(tab), entries));
 
         this.tabNavigationBar = builder.build();
 
         this.addRenderableWidget(this.tabNavigationBar);
         this.tabNavigationBar.selectTab(0, false);
         this.repositionElements();
+    }
+
+    protected void createEntries() {
+        for (int i = 1; i <= 5; i++) {
+            entries.add(new CategoryEntry(Component.literal("Test Category " + i).withStyle(ChatFormatting.GOLD), Component.literal("Category Tooltip for more Information!")));
+            entries.add(new IntegerValueEntry(Component.literal("Integer Config Entry"), Component.literal("Explains the usage of the Config Value."), new TestConfigEntry.IntegerEntry(100, 50)));
+            entries.add(new DoubleValueEntry(Component.literal("Double Config Entry"), Component.literal("Explains the usage of the Config Value."), new TestConfigEntry.DoubleEntry(2.5, 0.5)));
+            entries.add(new BooleanValueEntry(Component.literal("Boolean Config Entry"), Component.literal("Explains the usage of the Config Value."), new TestConfigEntry.BooleanEntry(true, false)));
+            entries.add(new StringValueEntry(Component.literal("String Config Entry"), Component.literal("Explains the usage of the Config Value."),
+                    new TestConfigEntry.StringEntry("Hello User!", "This is you custom message.")));
+        }
     }
 
     @Override
