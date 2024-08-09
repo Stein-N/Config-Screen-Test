@@ -80,6 +80,7 @@ public class ModConfigScreen extends Screen {
     @Override
     public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
         if (keyCode == 256 && this.shouldCloseOnEsc()) {
+            undoAllEntries();
             Minecraft.getInstance().setScreen(previous);
             return true;
         }

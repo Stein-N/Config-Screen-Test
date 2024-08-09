@@ -15,7 +15,7 @@ public class ConfigEntryCreator {
     public static List<BaseEntry> createCommonEntries() {
         return List.of(
             new CategoryEntry(Component.literal("Common Category"), Component.literal("Will inherit all Settings that are used on Client and Server.")),
-                new IntegerValueEntry(Component.literal("Diamond drop multiplier"), Component.literal("Change the amount of dropped Diamonds when mining a Diamond Ore."), new TestConfigEntry.IntegerEntry(1, 5)),
+                new IntegerValueEntry(Component.literal("Diamond drop multiplier"), Component.literal("Change the amount of dropped Diamonds."), new TestConfigEntry.IntegerEntry(1, 5)),
                 new IntegerValueEntry(Component.literal("Backpack rows"), Component.literal("Change the amount of rows the Backpack has"), new TestConfigEntry.IntegerEntry(3, 5)),
                 new IntegerValueEntry(Component.literal("Backpack columns"), Component.literal("Change the amount of columns the Backpack has"), new TestConfigEntry.IntegerEntry(9, 13))
         );

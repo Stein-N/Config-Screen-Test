@@ -20,7 +20,7 @@ public class StringValueEntry extends ValueEntry<String> {
         super(entryLabel, entryTooltip);
         this.entry = entry;
 
-        this.editBox = new EditBox(getFont(), 0, 0, getValueWidgetWidth() + 100, 18, Component.literal(""));
+        this.editBox = new EditBox(getFont(), 0, 0, getValueWidgetWidth() + 50, 18, Component.literal(""));
         this.editBox.setResponder(string -> setUndoState(!Objects.equals(string, entry.getConfigValue())));
         this.editBox.setValue(entry.getConfigValue());
 
@@ -32,7 +32,7 @@ public class StringValueEntry extends ValueEntry<String> {
                        int mouseX, int mouseY, boolean hovered, float partialTick) {
         drawStringWithTooltip(guiGraphics, entryLabel, entryTooltip, xPos, yPos + 6, mouseX, mouseY, hovered);
 
-        editBox.setX(xPos + entryWidth - (getValueWidgetWidth() + 100));
+        editBox.setX(xPos + entryWidth - (getValueWidgetWidth() + 50));
         editBox.setY(yPos + 1);
 
         undoButton.setX(xPos + entryWidth - undoButton.getWidth() - resetButton.getWidth());
@@ -41,7 +41,7 @@ public class StringValueEntry extends ValueEntry<String> {
         resetButton.setX(xPos + entryWidth - resetButton.getWidth());
         resetButton.setY(yPos);
 
-        editBox.setWidth((getValueWidgetWidth() + 100) - (undoButton.getWidth() + resetButton.getWidth()) - 1);
+        editBox.setWidth((getValueWidgetWidth() + 50) - (undoButton.getWidth() + resetButton.getWidth()) - 1);
 
         editBox.render(guiGraphics, mouseX, mouseY, partialTick);
         undoButton.render(guiGraphics, mouseX, mouseY, partialTick);
