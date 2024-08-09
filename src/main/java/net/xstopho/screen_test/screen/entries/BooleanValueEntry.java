@@ -24,6 +24,7 @@ public class BooleanValueEntry extends ValueEntry<Boolean> {
     public BooleanValueEntry(Component entryLabel, @Nullable Component entryTooltip, TestConfigEntry.BooleanEntry entry) {
         super(entryLabel, entryTooltip);
         this.entry = entry;
+        this.buttonState = entry.getConfigValue();
 
         this.entryButton = Button.builder(buttonState ? enabled : disabled, this::changeButtonState).bounds(0, 0, getValueWidgetWidth(), 20).build();
 
@@ -36,7 +37,7 @@ public class BooleanValueEntry extends ValueEntry<Boolean> {
         drawStringWithTooltip(guiGraphics, entryLabel, entryTooltip, xPos, yPos + 6, mouseX, mouseY, hovered);
 
         entryButton.setX(xPos + entryWidth - getValueWidgetWidth());
-        entryButton.setY(yPos + 1);
+        entryButton.setY(yPos);
 
         undoButton.setX(xPos + entryWidth - undoButton.getWidth() - resetButton.getWidth());
         undoButton.setY(yPos);
@@ -83,14 +84,14 @@ public class BooleanValueEntry extends ValueEntry<Boolean> {
     @Override
     protected void undoChange(Button button) {
         entryButton.setMessage(entry.getConfigValue() ? enabled : disabled);
-        buttonState = entry.getConfigValue();
         setUndoState(!Objects.equals(buttonState, entry.getConfigValue()));
+        buttonState = entry.getConfigValue();
     }
 
     @Override
     protected void resetValue(Button button) {
         entryButton.setMessage(entry.getDefaultValue() ? enabled : disabled);
+        setUndoState(!Objects.equals(buttonState, entry.getDefaultValue()));
         buttonState = entry.getDefaultValue();
-        setUndoState(!Objects.equals(buttonState, entry.getConfigValue()));
     }
 }
