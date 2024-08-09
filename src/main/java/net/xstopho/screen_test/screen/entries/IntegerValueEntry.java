@@ -25,7 +25,7 @@ public class IntegerValueEntry extends ValueEntry<Integer> {
         this.editBox = new EditBox(getFont(), 0, 0, getValueWidgetWidth(), 18, Component.literal(""));
         this.editBox.setFilter(value -> INTEGER_PATTERN.matcher(value).matches());
         this.editBox.setValue(entry.getConfigValue().toString());
-        this.editBox.setResponder(string -> checkUndoState(!Objects.equals(string, entry.getConfigValue().toString())));
+        this.editBox.setResponder(string -> setUndoState(!Objects.equals(string, entry.getConfigValue().toString())));
 
         this.children.add(editBox);
     }
@@ -61,6 +61,12 @@ public class IntegerValueEntry extends ValueEntry<Integer> {
     @Override
     public boolean wasChanged() {
         return !Objects.equals(editBox.getValue(), entry.getConfigValue().toString());
+    }
+
+    @Override
+    public void saveChangedValue() {
+        entry.setConfigValue(getChangedValue());
+        setUndoState(false);
     }
 
     @Override

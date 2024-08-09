@@ -1,21 +1,23 @@
 package net.xstopho.screen_test.screen;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.tabs.TabManager;
 import net.minecraft.client.gui.components.tabs.TabNavigationBar;
 import net.minecraft.client.gui.layouts.HeaderAndFooterLayout;
+import net.minecraft.client.gui.layouts.LinearLayout;
 import net.minecraft.client.gui.navigation.ScreenRectangle;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
-import net.xstopho.screen_test.config.TestConfigEntry;
-import net.xstopho.screen_test.screen.entries.*;
+import net.xstopho.screen_test.helper.ConfigEntryCreator;
 import net.xstopho.screen_test.screen.entries.base.BaseEntry;
+import net.xstopho.screen_test.screen.entries.base.ValueEntry;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class ModConfigScreen extends Screen {
 
@@ -23,10 +25,16 @@ public class ModConfigScreen extends Screen {
     private final HeaderAndFooterLayout layout;
 
     private final TabManager tabManager;
-    private final String[] tabs = { "Common", "Client", "Server" };
     private TabNavigationBar tabNavigationBar;
 
-    private static List<BaseEntry> entries = new ArrayList<>();
+    private Button saveButton, closeButton, resetButton;
+    private final Component saveComponent = Component.translatable("screen-test.components.footer.save.label");
+    private final Component closeComponent = Component.translatable("screen-test.components.footer.close.label");
+    private final Component resetComponent = Component.translatable("screen-test.components.footer.reset.label");
+
+    private static List<BaseEntry> commonEntries = new ArrayList<>();
+    private static List<BaseEntry> clientEntries = new ArrayList<>();
+    private static List<BaseEntry> serverEntries = new ArrayList<>();
 
     public ModConfigScreen(Screen previous, Component component) {
         super(component);
@@ -38,32 +46,31 @@ public class ModConfigScreen extends Screen {
 
     @Override
     protected void init() {
-        createEntries();
+        if (commonEntries.isEmpty()) commonEntries = ConfigEntryCreator.createCommonEntries();
+        if (clientEntries.isEmpty()) clientEntries = ConfigEntryCreator.createClientEntries();
+        if (serverEntries.isEmpty()) serverEntries = ConfigEntryCreator.createServerEntries();
 
         TabNavigationBar.Builder builder = TabNavigationBar.builder(this.tabManager, this.width);
 
-        for (String tab : tabs) builder.addTabs(new CategoryTab(this, Component.literal(tab), entries));
+        builder.addTabs(new CategoryTab(this, Component.literal("Common"), commonEntries),
+                new CategoryTab(this, Component.literal("Client"), clientEntries),
+                new CategoryTab(this, Component.literal("Server"), serverEntries));
 
         this.tabNavigationBar = builder.build();
-
         this.addRenderableWidget(this.tabNavigationBar);
+
+        LinearLayout footer = this.layout.addToFooter(LinearLayout.horizontal().spacing(8));
+        this.saveButton = footer.addChild(Button.builder(saveComponent, this::saveAllEntries)
+                .width(100).build());
+        this.resetButton = footer.addChild(Button.builder(resetComponent, this::resetAllEntries)
+                .width(100).build());
+        this.closeButton = footer.addChild(Button.builder(closeComponent, button -> this.onClose())
+                .width(100).build());
+
+        this.layout.visitWidgets(this::addRenderableWidget);
+
         this.tabNavigationBar.selectTab(0, false);
         this.repositionElements();
-    }
-
-    public static void createEntries() {
-        for (int i = 1; i <= 5; i++) {
-            entries.add(new CategoryEntry(Component.literal("Test Category " + i).withStyle(ChatFormatting.GOLD), Component.literal("Category Tooltip for more Information!")));
-            entries.add(new IntegerValueEntry(Component.literal("Integer Config Entry"), Component.literal("Explains the usage of the Config Value."), new TestConfigEntry.IntegerEntry(100, 50)));
-            entries.add(new DoubleValueEntry(Component.literal("Double Config Entry"), Component.literal("Explains the usage of the Config Value."), new TestConfigEntry.DoubleEntry(2.5, 0.5)));
-            entries.add(new BooleanValueEntry(Component.literal("Boolean Config Entry"), Component.literal("Explains the usage of the Config Value."), new TestConfigEntry.BooleanEntry(true, false)));
-            entries.add(new StringValueEntry(Component.literal("String Config Entry"), Component.literal("Explains the usage of the Config Value."),
-                    new TestConfigEntry.StringEntry("Hello User!", "This is you custom message.")));
-        }
-    }
-
-    public static void resetEntries() {
-        entries = new ArrayList<>();
     }
 
     @Override
@@ -71,7 +78,7 @@ public class ModConfigScreen extends Screen {
         this.renderBackground(guiGraphics, mouseX, mouseY, ticks);
         super.render(guiGraphics, mouseX, mouseY, ticks);
         RenderSystem.enableBlend();
-        guiGraphics.blit(Screen.FOOTER_SEPARATOR, 0, this.height - getHeaderHeight(), 0.0F, 0.0F, this.width, 2, 32, 2);
+        guiGraphics.blit(Screen.FOOTER_SEPARATOR, 0, this.height - getHeaderHeight() - 10, 0.0F, 0.0F, this.width, 2, 32, 2);
         RenderSystem.disableBlend();
     }
 
@@ -90,7 +97,7 @@ public class ModConfigScreen extends Screen {
             this.tabNavigationBar.setWidth(this.width);
             this.tabNavigationBar.arrangeElements();
             int i = this.tabNavigationBar.getRectangle().bottom();
-            ScreenRectangle screenRectangle = new ScreenRectangle(0, i, this.width, this.height - (i * 2));
+            ScreenRectangle screenRectangle = new ScreenRectangle(0, i, this.width, this.height - (i * 2) - 10);
             this.tabManager.setTabArea(screenRectangle);
             this.layout.setHeaderHeight(i);
             this.layout.arrangeElements();
@@ -99,5 +106,65 @@ public class ModConfigScreen extends Screen {
 
     public int getHeaderHeight() {
         return this.layout.getHeaderHeight();
+    }
+
+    @Override
+    public void onClose() {
+        undoAllEntries();
+        Minecraft.getInstance().setScreen(previous);
+    }
+
+    private void saveAllEntries(Button button) {
+        commonEntries.forEach(baseEntry -> {
+            if (baseEntry instanceof ValueEntry<?> valueEntry) {
+                if (valueEntry.wasChanged()) valueEntry.saveChangedValue();
+            }
+        });
+        clientEntries.forEach(baseEntry -> {
+            if (baseEntry instanceof ValueEntry<?> valueEntry) {
+                if (valueEntry.wasChanged()) valueEntry.saveChangedValue();
+            }
+        });
+        serverEntries.forEach(baseEntry -> {
+            if (baseEntry instanceof ValueEntry<?> valueEntry) {
+                if (valueEntry.wasChanged()) valueEntry.saveChangedValue();
+            }
+        });
+    }
+
+    private void resetAllEntries(Button button) {
+        commonEntries.forEach(baseEntry -> {
+            if (baseEntry instanceof ValueEntry<?> valueEntry) {
+                valueEntry.resetToDefault();
+            }
+        });
+        clientEntries.forEach(baseEntry -> {
+            if (baseEntry instanceof ValueEntry<?> valueEntry) {
+                valueEntry.resetToDefault();
+            }
+        });
+        serverEntries.forEach(baseEntry -> {
+            if (baseEntry instanceof ValueEntry<?> valueEntry) {
+                valueEntry.resetToDefault();
+            }
+        });
+    }
+
+    private void undoAllEntries() {
+        commonEntries.forEach(baseEntry -> {
+            if (baseEntry instanceof ValueEntry<?> valueEntry) {
+                valueEntry.undoOnClose();
+            }
+        });
+        clientEntries.forEach(baseEntry -> {
+            if (baseEntry instanceof ValueEntry<?> valueEntry) {
+                valueEntry.undoOnClose();
+            }
+        });
+        serverEntries.forEach(baseEntry -> {
+            if (baseEntry instanceof ValueEntry<?> valueEntry) {
+                valueEntry.undoOnClose();
+            }
+        });
     }
 }

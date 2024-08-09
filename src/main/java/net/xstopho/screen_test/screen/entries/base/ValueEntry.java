@@ -39,13 +39,23 @@ public abstract class ValueEntry<T> extends BaseEntry {
         return valueWidgetWidth;
     }
 
-    protected void checkUndoState(boolean bool) {
+    protected void setUndoState(boolean bool) {
         undoButton.active = bool;
     }
 
     public abstract T getChangedValue();
 
     public abstract boolean wasChanged();
+
+    public abstract void saveChangedValue();
+
+    public void resetToDefault() {
+        resetValue(resetButton);
+    };
+
+    public void undoOnClose() {
+        undoChange(undoButton);
+    }
 
     protected abstract void undoChange(Button button);
 

@@ -15,12 +15,13 @@ public class StringValueEntry extends ValueEntry<String> {
     private final TestConfigEntry.StringEntry entry;
     private final EditBox editBox;
 
+
     public StringValueEntry(Component entryLabel, @Nullable Component entryTooltip, TestConfigEntry.StringEntry entry) {
         super(entryLabel, entryTooltip);
         this.entry = entry;
 
-        this.editBox = new EditBox(getFont(), 0, 0, getValueWidgetWidth(), 18, Component.literal(""));
-        this.editBox.setResponder(string -> checkUndoState(!Objects.equals(string, entry.getConfigValue())));
+        this.editBox = new EditBox(getFont(), 0, 0, getValueWidgetWidth() + 100, 18, Component.literal(""));
+        this.editBox.setResponder(string -> setUndoState(!Objects.equals(string, entry.getConfigValue())));
         this.editBox.setValue(entry.getConfigValue());
 
         this.children.add(editBox);
@@ -31,7 +32,7 @@ public class StringValueEntry extends ValueEntry<String> {
                        int mouseX, int mouseY, boolean hovered, float partialTick) {
         drawStringWithTooltip(guiGraphics, entryLabel, entryTooltip, xPos, yPos + 6, mouseX, mouseY, hovered);
 
-        editBox.setX(xPos + entryWidth - getValueWidgetWidth());
+        editBox.setX(xPos + entryWidth - (getValueWidgetWidth() + 100));
         editBox.setY(yPos + 1);
 
         undoButton.setX(xPos + entryWidth - undoButton.getWidth() - resetButton.getWidth());
@@ -40,7 +41,7 @@ public class StringValueEntry extends ValueEntry<String> {
         resetButton.setX(xPos + entryWidth - resetButton.getWidth());
         resetButton.setY(yPos);
 
-        editBox.setWidth(getValueWidgetWidth() - (undoButton.getWidth() + resetButton.getWidth()) - 1);
+        editBox.setWidth((getValueWidgetWidth() + 100) - (undoButton.getWidth() + resetButton.getWidth()) - 1);
 
         editBox.render(guiGraphics, mouseX, mouseY, partialTick);
         undoButton.render(guiGraphics, mouseX, mouseY, partialTick);
@@ -56,7 +57,13 @@ public class StringValueEntry extends ValueEntry<String> {
 
     @Override
     public boolean wasChanged() {
-        return !Objects.equals(editBox.getValue(), entry.getConfigValue().toString());
+        return !Objects.equals(editBox.getValue(), entry.getConfigValue());
+    }
+
+    @Override
+    public void saveChangedValue() {
+        entry.setConfigValue(getChangedValue());
+        setUndoState(false);
     }
 
     @Override

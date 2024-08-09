@@ -16,7 +16,6 @@
 	"environment": "*",
 	"entrypoints": {
 		"main": [ "net.xstopho.screen_test.ScreenTest" ],
-		"client": [ "net.xstopho.screen_test.ScreenTestClient" ],
 		"modmenu": [ "net.xstopho.screen_test.compat.ModMenuCompat" ]
 	},
 	"depends": {

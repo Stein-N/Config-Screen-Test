@@ -61,7 +61,7 @@ public class BooleanValueEntry extends ValueEntry<Boolean> {
             button.setMessage(enabled);
             buttonState = true;
         }
-        checkUndoState(!Objects.equals(buttonState, entry.getConfigValue()));
+        setUndoState(!Objects.equals(buttonState, entry.getConfigValue()));
     }
 
     @Override
@@ -75,16 +75,22 @@ public class BooleanValueEntry extends ValueEntry<Boolean> {
     }
 
     @Override
+    public void saveChangedValue() {
+        entry.setConfigValue(getChangedValue());
+        setUndoState(false);
+    }
+
+    @Override
     protected void undoChange(Button button) {
         entryButton.setMessage(entry.getConfigValue() ? enabled : disabled);
         buttonState = entry.getConfigValue();
-        checkUndoState(!Objects.equals(buttonState, entry.getConfigValue()));
+        setUndoState(!Objects.equals(buttonState, entry.getConfigValue()));
     }
 
     @Override
     protected void resetValue(Button button) {
         entryButton.setMessage(entry.getDefaultValue() ? enabled : disabled);
         buttonState = entry.getDefaultValue();
-        checkUndoState(!Objects.equals(buttonState, entry.getConfigValue()));
+        setUndoState(!Objects.equals(buttonState, entry.getConfigValue()));
     }
 }
