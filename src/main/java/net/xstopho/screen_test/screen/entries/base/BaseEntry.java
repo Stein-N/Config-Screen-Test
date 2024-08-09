@@ -31,7 +31,7 @@ public abstract class BaseEntry extends ContainerObjectSelectionList.Entry<BaseE
     protected void drawStringWithTooltip(GuiGraphics guiGraphics, Component component, Component tooltip, int xPos, int yPos, int mouseX, int mouseY, boolean hovered) {
         if (component != null) {
             guiGraphics.drawString(font, component, xPos, yPos, -1, false);
-            if (hovered) {
+            if (tooltip != null && hovered) {
                 int xMax = xPos + font.width(component.getString());
                 int yMax = yPos + font.lineHeight;
                 if (xPos <= mouseX && xMax >= mouseX && yPos <= mouseY && yMax >= mouseY) {
