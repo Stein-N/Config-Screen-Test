@@ -13,10 +13,10 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.xstopho.screen_test.helper.ConfigEntryCreator;
 import net.xstopho.screen_test.screen.entries.base.BaseEntry;
-import net.xstopho.screen_test.screen.entries.base.ValueEntry;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 public class ModConfigScreen extends Screen {
 
@@ -58,8 +58,8 @@ public class ModConfigScreen extends Screen {
         this.addRenderableWidget(this.tabNavigationBar);
 
         LinearLayout footer = this.layout.addToFooter(LinearLayout.horizontal().spacing(8));
-        footer.addChild(Button.builder(saveComponent, this::saveAllEntries).width(100).build());
-        footer.addChild(Button.builder(resetComponent, this::resetAllEntries).width(100).build());
+        footer.addChild(Button.builder(saveComponent, b -> processEntries(BaseEntry::saveChangedValue)).width(100).build());
+        footer.addChild(Button.builder(resetComponent, b -> processEntries(BaseEntry::resetValues)).width(100).build());
         footer.addChild(Button.builder(closeComponent, button -> this.onClose()).width(100).build());
 
         this.layout.visitWidgets(this::addRenderableWidget);
@@ -80,7 +80,7 @@ public class ModConfigScreen extends Screen {
     @Override
     public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
         if (keyCode == 256 && this.shouldCloseOnEsc()) {
-            undoAllEntries();
+            processEntries(BaseEntry::undoChanges);
             Minecraft.getInstance().setScreen(previous);
             return true;
         }
@@ -106,61 +106,13 @@ public class ModConfigScreen extends Screen {
 
     @Override
     public void onClose() {
-        undoAllEntries();
+        processEntries(BaseEntry::undoChanges);
         Minecraft.getInstance().setScreen(previous);
     }
 
-    private void saveAllEntries(Button button) {
-        commonEntries.forEach(baseEntry -> {
-            if (baseEntry instanceof ValueEntry<?> valueEntry) {
-                if (valueEntry.wasChanged()) valueEntry.saveChangedValue();
-            }
-        });
-        clientEntries.forEach(baseEntry -> {
-            if (baseEntry instanceof ValueEntry<?> valueEntry) {
-                if (valueEntry.wasChanged()) valueEntry.saveChangedValue();
-            }
-        });
-        serverEntries.forEach(baseEntry -> {
-            if (baseEntry instanceof ValueEntry<?> valueEntry) {
-                if (valueEntry.wasChanged()) valueEntry.saveChangedValue();
-            }
-        });
-    }
-
-    private void resetAllEntries(Button button) {
-        commonEntries.forEach(baseEntry -> {
-            if (baseEntry instanceof ValueEntry<?> valueEntry) {
-                valueEntry.resetToDefault();
-            }
-        });
-        clientEntries.forEach(baseEntry -> {
-            if (baseEntry instanceof ValueEntry<?> valueEntry) {
-                valueEntry.resetToDefault();
-            }
-        });
-        serverEntries.forEach(baseEntry -> {
-            if (baseEntry instanceof ValueEntry<?> valueEntry) {
-                valueEntry.resetToDefault();
-            }
-        });
-    }
-
-    private void undoAllEntries() {
-        commonEntries.forEach(baseEntry -> {
-            if (baseEntry instanceof ValueEntry<?> valueEntry) {
-                valueEntry.undoOnClose();
-            }
-        });
-        clientEntries.forEach(baseEntry -> {
-            if (baseEntry instanceof ValueEntry<?> valueEntry) {
-                valueEntry.undoOnClose();
-            }
-        });
-        serverEntries.forEach(baseEntry -> {
-            if (baseEntry instanceof ValueEntry<?> valueEntry) {
-                valueEntry.undoOnClose();
-            }
-        });
+    private void processEntries(Consumer<BaseEntry> consumer) {
+        commonEntries.forEach(consumer);
+        clientEntries.forEach(consumer);
+        serverEntries.forEach(consumer);
     }
 }

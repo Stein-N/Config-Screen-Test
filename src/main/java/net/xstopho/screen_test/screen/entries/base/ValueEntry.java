@@ -26,8 +26,8 @@ public abstract class ValueEntry<T> extends BaseEntry {
         this.entryLabel = entryLabel;
         this.entryTooltip = entryTooltip;
 
-        undoButton = Button.builder(undoComponent, this::undoChange).tooltip(Tooltip.create(undoTooltip)).bounds(0, 0, 20, 20).build();
-        resetButton = Button.builder(resetComponent, this::resetValue).tooltip(Tooltip.create(resetTooltip)).bounds(0, 0, 50, 20).build();
+        undoButton = Button.builder(undoComponent, b -> this.undoChanges()).tooltip(Tooltip.create(undoTooltip)).bounds(0, 0, 20, 20).build();
+        resetButton = Button.builder(resetComponent, b -> this.resetValues()).tooltip(Tooltip.create(resetTooltip)).bounds(0, 0, 50, 20).build();
 
         undoButton.active = false;
 
@@ -44,20 +44,4 @@ public abstract class ValueEntry<T> extends BaseEntry {
     }
 
     public abstract T getChangedValue();
-
-    public abstract boolean wasChanged();
-
-    public abstract void saveChangedValue();
-
-    public void resetToDefault() {
-        resetValue(resetButton);
-    };
-
-    public void undoOnClose() {
-        undoChange(undoButton);
-    }
-
-    protected abstract void undoChange(Button button);
-
-    protected abstract void resetValue(Button button);
 }

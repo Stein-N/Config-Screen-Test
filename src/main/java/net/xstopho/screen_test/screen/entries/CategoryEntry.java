@@ -21,4 +21,13 @@ public class CategoryEntry extends BaseEntry {
                 xPos + (entryWidth / 2) - (font.width(categoryLabel.getString()) / 2),
                 yPos + 6, mouseX, mouseY, hovered);
     }
+
+    @Override
+    public void saveChangedValue() {}
+
+    @Override
+    public void undoChanges() {}
+
+    @Override
+    public void resetValues() {}
 }

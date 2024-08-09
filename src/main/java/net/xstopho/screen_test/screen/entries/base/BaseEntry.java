@@ -48,4 +48,10 @@ public abstract class BaseEntry extends ContainerObjectSelectionList.Entry<BaseE
     public Font getFont() {
         return font;
     }
+
+    public abstract void saveChangedValue();
+
+    public abstract void undoChanges();
+
+    public abstract void resetValues();
 }

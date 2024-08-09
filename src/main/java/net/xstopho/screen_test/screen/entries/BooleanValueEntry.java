@@ -55,13 +55,11 @@ public class BooleanValueEntry extends ValueEntry<Boolean> {
     }
 
     private void changeButtonState(Button button) {
-        if (buttonState) {
-            button.setMessage(disabled);
-            buttonState = false;
-        } else {
-            button.setMessage(enabled);
-            buttonState = true;
-        }
+        buttonState = !buttonState;
+
+        if (buttonState) button.setMessage(enabled);
+        else button.setMessage(disabled);
+
         setUndoState(!Objects.equals(buttonState, entry.getConfigValue()));
     }
 
@@ -71,27 +69,22 @@ public class BooleanValueEntry extends ValueEntry<Boolean> {
     }
 
     @Override
-    public boolean wasChanged() {
-        return !Objects.equals(buttonState, entry.getConfigValue());
-    }
-
-    @Override
     public void saveChangedValue() {
         entry.setConfigValue(getChangedValue());
         setUndoState(false);
     }
 
     @Override
-    protected void undoChange(Button button) {
+    public void undoChanges() {
         entryButton.setMessage(entry.getConfigValue() ? enabled : disabled);
-        setUndoState(!Objects.equals(buttonState, entry.getConfigValue()));
         buttonState = entry.getConfigValue();
+        setUndoState(false);
     }
 
     @Override
-    protected void resetValue(Button button) {
+    public void resetValues() {
         entryButton.setMessage(entry.getDefaultValue() ? enabled : disabled);
-        setUndoState(!Objects.equals(buttonState, entry.getDefaultValue()));
         buttonState = entry.getDefaultValue();
+        setUndoState(!Objects.equals(buttonState, entry.getConfigValue()));
     }
 }

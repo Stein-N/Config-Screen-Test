@@ -1,7 +1,6 @@
 package net.xstopho.screen_test.screen.entries;
 
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.network.chat.Component;
 import net.xstopho.screen_test.config.TestConfigEntry;
@@ -56,23 +55,18 @@ public class StringValueEntry extends ValueEntry<String> {
     }
 
     @Override
-    public boolean wasChanged() {
-        return !Objects.equals(editBox.getValue(), entry.getConfigValue());
-    }
-
-    @Override
     public void saveChangedValue() {
         entry.setConfigValue(getChangedValue());
         setUndoState(false);
     }
 
     @Override
-    protected void undoChange(Button button) {
+    public void undoChanges() {
         editBox.setValue(this.entry.getConfigValue());
     }
 
     @Override
-    protected void resetValue(Button button) {
+    public void resetValues() {
         editBox.setValue(this.entry.getDefaultValue());
     }
 }
