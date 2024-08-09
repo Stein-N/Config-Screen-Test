@@ -7,6 +7,10 @@ import net.minecraft.client.gui.components.tabs.Tab;
 import net.minecraft.client.gui.navigation.ScreenRectangle;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
+import net.xstopho.screen_test.config.TestConfigEntry;
+import net.xstopho.screen_test.screen.entries.CategoryEntry;
+import net.xstopho.screen_test.screen.entries.IntegerValueEntry;
+import net.xstopho.screen_test.screen.entries.base.BaseEntry;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -23,17 +27,17 @@ public class CategoryTab implements Tab {
         this.component = component;
         this.screen = screen;
 
-        this.list = new CategoryEntryList(this, Minecraft.getInstance(), this.screen.width,
+        this.list = new CategoryEntryList(Minecraft.getInstance(), this.screen.width,
                 this.screen.height, 0, 24, createEntries());
     }
 
-    protected List<CategoryEntry> createEntries() {
-        List<CategoryEntry> entries = new LinkedList<>();
+    protected List<BaseEntry> createEntries() {
+        List<BaseEntry> entries = new LinkedList<>();
 
         for (int i = 1; i <= 5; i++) {
-            entries.add(new CategoryEntry(Component.literal("Test Category " + i).withStyle(ChatFormatting.GOLD)));
+            entries.add(new CategoryEntry(Component.literal("Test Category " + i).withStyle(ChatFormatting.GOLD), Component.literal("Category Tooltip for more Information!")));
             for (int j = 1; j <= 3; j++) {
-                entries.add(new CategoryEntry(component, "Entry " + i * j));
+                entries.add(new IntegerValueEntry(Component.literal("Integer Config Entry"), Component.literal("Explains the usage of the Config Value."), new TestConfigEntry.IntegerEntry(100, 50)));
             }
         }
         return entries;

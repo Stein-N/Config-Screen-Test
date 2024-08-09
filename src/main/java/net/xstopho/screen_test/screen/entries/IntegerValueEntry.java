@@ -1,0 +1,68 @@
+package net.xstopho.screen_test.screen.entries;
+
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.components.EditBox;
+import net.minecraft.network.chat.Component;
+import net.xstopho.screen_test.config.TestConfigEntry;
+import net.xstopho.screen_test.screen.entries.base.ValueEntry;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.Objects;
+import java.util.regex.Pattern;
+
+public class IntegerValueEntry extends ValueEntry {
+
+    private final TestConfigEntry.IntegerEntry entry;
+    private final EditBox editBox;
+
+    private final int EDIT_BOX_WIDTH = 150;
+    private final Pattern INTEGER_PATTERN = Pattern.compile("-?\\d*");
+
+    public IntegerValueEntry(Component entryLabel, @Nullable Component entryTooltip, TestConfigEntry.IntegerEntry entry) {
+        super(entryLabel, entryTooltip);
+        this.entry = entry;
+
+        this.editBox = new EditBox(getFont(), 0, 0, EDIT_BOX_WIDTH, 18, Component.literal(""));
+        this.editBox.setFilter(value -> INTEGER_PATTERN.matcher(value).matches());
+        this.editBox.setValue(entry.getConfigValue().toString());
+        this.editBox.setResponder(string -> {
+            this.undoButton.active = !Objects.equals(string, entry.getConfigValue().toString());
+        });
+
+        this.children.add(editBox);
+    }
+
+    @Override
+    public void render(GuiGraphics guiGraphics, int index, int yPos, int xPos, int entryWidth, int entryHeight,
+                       int mouseX, int mouseY, boolean hovered, float partialTick) {
+        drawStringWithTooltip(guiGraphics, entryLabel, entryTooltip, xPos, yPos + 6, mouseX, mouseY, hovered);
+
+        editBox.setX(xPos + entryWidth - EDIT_BOX_WIDTH);
+        editBox.setY(yPos + 1);
+
+        undoButton.setX(xPos + entryWidth - undoButton.getWidth() - resetButton.getWidth());
+        undoButton.setY(yPos);
+
+        resetButton.setX(xPos + entryWidth - resetButton.getWidth());
+        resetButton.setY(yPos);
+
+        editBox.setWidth(EDIT_BOX_WIDTH - (undoButton.getWidth() + resetButton.getWidth()) - 1);
+
+        editBox.render(guiGraphics, mouseX, mouseY, partialTick);
+        undoButton.render(guiGraphics, mouseX, mouseY, partialTick);
+        resetButton.render(guiGraphics, mouseX, mouseY, partialTick);
+
+        guiGraphics.blit(undoSprite, undoButton.getX() + 3, undoButton.getY() + 3, 0.0F, 0.0F, 14, 14, 14, 14);
+    }
+
+    @Override
+    protected void undoChange(Button button) {
+        editBox.setValue(this.entry.getConfigValue().toString());
+    }
+
+    @Override
+    protected void resetValue(Button button) {
+        editBox.setValue(this.entry.getDefaultValue().toString());
+    }
+}

@@ -1,0 +1,5 @@
+{
+  "screen-test.components.reset.label": "Reset",
+  "screen-test.components.reset.tooltip": "Reset the Value to the Default Value.",
+  "screen-test.components.undo.tooltip": "Change the Value back to the Config Value."
+}
