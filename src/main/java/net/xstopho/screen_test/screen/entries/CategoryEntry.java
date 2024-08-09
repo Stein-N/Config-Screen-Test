@@ -1,5 +1,6 @@
 package net.xstopho.screen_test.screen.entries;
 
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.xstopho.screen_test.screen.entries.base.BaseEntry;
@@ -10,7 +11,7 @@ public class CategoryEntry extends BaseEntry {
     private final Component tootlip;
 
     public CategoryEntry(Component categoryLabel, Component tooltip) {
-        this.categoryLabel = categoryLabel;
+        this.categoryLabel = categoryLabel.copy().withStyle(ChatFormatting.GOLD);
         this.tootlip = tooltip;
     }
 
