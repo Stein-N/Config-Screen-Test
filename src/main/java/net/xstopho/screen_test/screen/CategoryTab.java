@@ -9,6 +9,7 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.xstopho.screen_test.config.TestConfigEntry;
 import net.xstopho.screen_test.screen.entries.CategoryEntry;
+import net.xstopho.screen_test.screen.entries.DoubleValueEntry;
 import net.xstopho.screen_test.screen.entries.IntegerValueEntry;
 import net.xstopho.screen_test.screen.entries.base.BaseEntry;
 
@@ -36,9 +37,8 @@ public class CategoryTab implements Tab {
 
         for (int i = 1; i <= 5; i++) {
             entries.add(new CategoryEntry(Component.literal("Test Category " + i).withStyle(ChatFormatting.GOLD), Component.literal("Category Tooltip for more Information!")));
-            for (int j = 1; j <= 3; j++) {
-                entries.add(new IntegerValueEntry(Component.literal("Integer Config Entry"), Component.literal("Explains the usage of the Config Value."), new TestConfigEntry.IntegerEntry(100, 50)));
-            }
+            entries.add(new IntegerValueEntry(Component.literal("Integer Config Entry"), Component.literal("Explains the usage of the Config Value."), new TestConfigEntry.IntegerEntry(100, 50)));
+            entries.add(new DoubleValueEntry(Component.literal("Double Config Entry"), Component.literal("Explains the usage of the Config Value."), new TestConfigEntry.DoubleEntry(2.5, 0.5)));
         }
         return entries;
     }
