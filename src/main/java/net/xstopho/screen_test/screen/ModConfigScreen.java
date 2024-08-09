@@ -26,7 +26,7 @@ public class ModConfigScreen extends Screen {
     private final String[] tabs = { "Common", "Client", "Server" };
     private TabNavigationBar tabNavigationBar;
 
-    private List<BaseEntry> entries = new ArrayList<>();
+    private static List<BaseEntry> entries = new ArrayList<>();
 
     public ModConfigScreen(Screen previous, Component component) {
         super(component);
@@ -51,7 +51,7 @@ public class ModConfigScreen extends Screen {
         this.repositionElements();
     }
 
-    protected void createEntries() {
+    public static void createEntries() {
         for (int i = 1; i <= 5; i++) {
             entries.add(new CategoryEntry(Component.literal("Test Category " + i).withStyle(ChatFormatting.GOLD), Component.literal("Category Tooltip for more Information!")));
             entries.add(new IntegerValueEntry(Component.literal("Integer Config Entry"), Component.literal("Explains the usage of the Config Value."), new TestConfigEntry.IntegerEntry(100, 50)));
@@ -60,6 +60,10 @@ public class ModConfigScreen extends Screen {
             entries.add(new StringValueEntry(Component.literal("String Config Entry"), Component.literal("Explains the usage of the Config Value."),
                     new TestConfigEntry.StringEntry("Hello User!", "This is you custom message.")));
         }
+    }
+
+    public static void resetEntries() {
+        entries = new ArrayList<>();
     }
 
     @Override
