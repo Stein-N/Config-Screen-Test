@@ -17,7 +17,6 @@ import net.xstopho.screen_test.screen.entries.base.ValueEntry;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class ModConfigScreen extends Screen {
 
@@ -27,7 +26,6 @@ public class ModConfigScreen extends Screen {
     private final TabManager tabManager;
     private TabNavigationBar tabNavigationBar;
 
-    private Button saveButton, closeButton, resetButton;
     private final Component saveComponent = Component.translatable("screen-test.components.footer.save.label");
     private final Component closeComponent = Component.translatable("screen-test.components.footer.close.label");
     private final Component resetComponent = Component.translatable("screen-test.components.footer.reset.label");
@@ -60,12 +58,9 @@ public class ModConfigScreen extends Screen {
         this.addRenderableWidget(this.tabNavigationBar);
 
         LinearLayout footer = this.layout.addToFooter(LinearLayout.horizontal().spacing(8));
-        this.saveButton = footer.addChild(Button.builder(saveComponent, this::saveAllEntries)
-                .width(100).build());
-        this.resetButton = footer.addChild(Button.builder(resetComponent, this::resetAllEntries)
-                .width(100).build());
-        this.closeButton = footer.addChild(Button.builder(closeComponent, button -> this.onClose())
-                .width(100).build());
+        footer.addChild(Button.builder(saveComponent, this::saveAllEntries).width(100).build());
+        footer.addChild(Button.builder(resetComponent, this::resetAllEntries).width(100).build());
+        footer.addChild(Button.builder(closeComponent, button -> this.onClose()).width(100).build());
 
         this.layout.visitWidgets(this::addRenderableWidget);
 
