@@ -1,6 +1,5 @@
 package net.xstopho.screen_test.screen;
 
-import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
@@ -60,10 +59,7 @@ public class ModConfigScreen extends Screen {
 
         LinearLayout footer = this.layout.addToFooter(LinearLayout.horizontal().spacing(8));
         footer.addChild(Button.builder(saveComponent, b -> processEntries(BaseEntry::saveChangedValue)).width(100).build());
-        footer.addChild(Button.builder(resetComponent, b -> {
-            //processEntries(BaseEntry::resetValues);
-            Minecraft.getInstance().setScreen(new SingleSelectionScreen(this, Component.literal("Single Selection Screen")));
-        }).width(100).build());
+        footer.addChild(Button.builder(resetComponent, b -> processEntries(BaseEntry::resetValues)).width(100).build());
         footer.addChild(Button.builder(closeComponent, button -> this.onClose()).width(100).build());
 
         this.layout.visitWidgets(this::addRenderableWidget);
@@ -76,9 +72,8 @@ public class ModConfigScreen extends Screen {
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float ticks) {
         this.renderBackground(guiGraphics, mouseX, mouseY, ticks);
         super.render(guiGraphics, mouseX, mouseY, ticks);
-        RenderSystem.enableBlend();
+
         guiGraphics.blit(Screen.FOOTER_SEPARATOR, 0, this.height - getHeaderHeight() - 10, 0.0F, 0.0F, this.width, 2, 32, 2);
-        RenderSystem.disableBlend();
     }
 
     @Override

@@ -2,10 +2,8 @@ package net.xstopho.screen_test.helper;
 
 import net.minecraft.network.chat.Component;
 import net.xstopho.screen_test.config.TestConfigEntry;
-import net.xstopho.screen_test.screen.entries.BooleanValueEntry;
-import net.xstopho.screen_test.screen.entries.CategoryEntry;
-import net.xstopho.screen_test.screen.entries.IntegerValueEntry;
-import net.xstopho.screen_test.screen.entries.StringValueEntry;
+import net.xstopho.screen_test.config.TestEnums;
+import net.xstopho.screen_test.screen.entries.*;
 import net.xstopho.screen_test.screen.entries.base.BaseEntry;
 
 import java.util.ArrayList;
@@ -26,7 +24,8 @@ public class ConfigEntryCreator {
     public static List<BaseEntry> createClientEntries() {
         return List.of(
             new CategoryEntry(Component.literal("Client Settings"), Component.literal("Settings that are only necessary on the Client Side.")),
-                new BooleanValueEntry(Component.literal("Render bigger In-Hand Models"), Component.literal("Choose if the bigger Item Model of <ITEM_NAME> should be rendered"), new TestConfigEntry.BooleanEntry(true, true))
+                new BooleanValueEntry(Component.literal("Render bigger In-Hand Models"), Component.literal("Choose if the bigger Item Model of <ITEM_NAME> should be rendered"), new TestConfigEntry.BooleanEntry(true, true)),
+                new EnumValueEntry<>(Component.literal("Start Item"), Component.literal("Select one start Item"), new TestConfigEntry.EnumConfigEntry<>(TestEnums.Items.class, TestEnums.Items.COAL, TestEnums.Items.BERRY))
         );
     }
 
