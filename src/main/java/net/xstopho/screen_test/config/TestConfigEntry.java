@@ -54,6 +54,12 @@ public class TestConfigEntry<T> implements Supplier<T> {
         }
     }
 
+    public static class FloatEntry extends TestConfigEntry<Float> {
+        public FloatEntry(Float defaultValue, Float configValue) {
+            super(defaultValue, configValue);
+        }
+    }
+
     public static class EnumConfigEntry<T extends Enum<T>> extends TestConfigEntry<T> {
         private final Class<T> enumClass;
 
