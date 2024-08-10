@@ -25,7 +25,7 @@ public class EnumValueEntry<T extends Enum<T>> extends ValueEntry<T> {
         super(entryLabel, entryTooltip);
         this.entry = entry;
 
-        this.editBox = new EditBox(getFont(), 0, 0, getValueWidgetWidth(), 18, Component.literal(""));
+        this.editBox = new EditBox(getFont(), 0, 0, getValueWidgetWidth() + 50, 18, Component.literal(""));
         this.editBox.setValue(entry.getConfigValue().toString());
         this.editBox.setEditable(false);
 
@@ -39,9 +39,9 @@ public class EnumValueEntry<T extends Enum<T>> extends ValueEntry<T> {
 
         drawStringWithTooltip(guiGraphics, entryLabel, entryTooltip, xPos, yPos + 6, mouseX, mouseY, hovered);
 
-        editBox.setX(xPos + entryWidth - getValueWidgetWidth());
+        editBox.setX(xPos + entryWidth - getValueWidgetWidth() - 50);
         editBox.setY(yPos + 1);
-        editBox.setWidth(getValueWidgetWidth() - (undoButton.getWidth() + resetButton.getWidth()) - 1);
+        editBox.setWidth(getValueWidgetWidth() + 50 - (undoButton.getWidth() + resetButton.getWidth()) - 1);
         this.editBox.setResponder(string -> setUndoState(!Objects.equals(string, entry.getConfigValue().toString())));
 
         editBox.render(guiGraphics, mouseX, mouseY, partialTick);
@@ -70,6 +70,7 @@ public class EnumValueEntry<T extends Enum<T>> extends ValueEntry<T> {
     @Override
     public void saveChangedValue() {
         entry.setConfigValue(getChangedValue());
+        setUndoState(false);
     }
 
     @Override

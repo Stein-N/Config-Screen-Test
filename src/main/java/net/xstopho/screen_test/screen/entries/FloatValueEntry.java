@@ -36,6 +36,7 @@ public class FloatValueEntry extends ValueEntry<Float> {
     @Override
     public void saveChangedValue() {
         entry.setConfigValue(getChangedValue());
+        setUndoState(false);
     }
 
     @Override

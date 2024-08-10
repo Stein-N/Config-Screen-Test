@@ -18,6 +18,8 @@ public class EnumSelectionEntry<T extends Enum<T>> extends BaseEntry {
         this.valueButton = Button.builder(entryLabel, b -> {
             Minecraft.getInstance().setScreen(previous);
             parentBox.setValue(value.toString());
+            parentBox.setCursorPosition(0);
+            parentBox.setHighlightPos(0);
         }).tooltip(Tooltip.create(entryTooltip)).width(150).build();
 
         this.children.add(valueButton);
