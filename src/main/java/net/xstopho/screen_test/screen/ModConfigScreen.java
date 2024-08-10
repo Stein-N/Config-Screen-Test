@@ -64,7 +64,7 @@ public class ModConfigScreen extends Screen {
 
         this.layout.visitWidgets(this::addRenderableWidget);
 
-        this.tabNavigationBar.selectTab(0, false);
+        this.tabNavigationBar.selectTab(0, true);
         this.repositionElements();
     }
 
