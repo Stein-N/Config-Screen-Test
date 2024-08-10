@@ -1,4 +1,4 @@
-package net.xstopho.screen_test.screen;
+package net.xstopho.screen_test.screen.tabs;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.AbstractWidget;
@@ -6,6 +6,7 @@ import net.minecraft.client.gui.components.tabs.Tab;
 import net.minecraft.client.gui.navigation.ScreenRectangle;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
+import net.xstopho.screen_test.screen.components.CategoryEntryList;
 import net.xstopho.screen_test.screen.entries.base.BaseEntry;
 
 import java.util.List;

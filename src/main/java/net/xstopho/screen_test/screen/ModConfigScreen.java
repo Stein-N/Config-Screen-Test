@@ -13,6 +13,7 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.xstopho.screen_test.helper.ConfigEntryCreator;
 import net.xstopho.screen_test.screen.entries.base.BaseEntry;
+import net.xstopho.screen_test.screen.tabs.CategoryTab;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,8 +35,8 @@ public class ModConfigScreen extends Screen {
     private static List<BaseEntry> clientEntries = new ArrayList<>();
     private static List<BaseEntry> serverEntries = new ArrayList<>();
 
-    public ModConfigScreen(Screen previous, Component component) {
-        super(component);
+    public ModConfigScreen(Screen previous) {
+        super(Component.literal(""));
         this.previous = previous;
         this.layout = new HeaderAndFooterLayout(this, 32, 32);
 
@@ -59,7 +60,10 @@ public class ModConfigScreen extends Screen {
 
         LinearLayout footer = this.layout.addToFooter(LinearLayout.horizontal().spacing(8));
         footer.addChild(Button.builder(saveComponent, b -> processEntries(BaseEntry::saveChangedValue)).width(100).build());
-        footer.addChild(Button.builder(resetComponent, b -> processEntries(BaseEntry::resetValues)).width(100).build());
+        footer.addChild(Button.builder(resetComponent, b -> {
+            //processEntries(BaseEntry::resetValues);
+            Minecraft.getInstance().setScreen(new SingleSelectionScreen(this, Component.literal("Single Selection Screen")));
+        }).width(100).build());
         footer.addChild(Button.builder(closeComponent, button -> this.onClose()).width(100).build());
 
         this.layout.visitWidgets(this::addRenderableWidget);

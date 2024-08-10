@@ -1,4 +1,4 @@
-package net.xstopho.screen_test.screen;
+package net.xstopho.screen_test.screen.components;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
