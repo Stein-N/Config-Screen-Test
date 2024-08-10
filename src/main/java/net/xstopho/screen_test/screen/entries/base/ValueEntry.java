@@ -49,7 +49,7 @@ public abstract class ValueEntry<T> extends BaseEntry {
         undoButton.render(guiGraphics, mouseX, mouseY, partialTick);
         resetButton.render(guiGraphics, mouseX, mouseY, partialTick);
 
-        guiGraphics.blit(undoSprite, undoButton.getX() + 3, undoButton.getY() + 3, 0.0F, 0.0F, 14, 14, 14, 14);
+        guiGraphics.blit(undoSprite, undoButton.getX() + 2, undoButton.getY() + 2, 0.0F, 0.0F, 16, 16, 16, 16);
     }
 
     public int getValueWidgetWidth() {
