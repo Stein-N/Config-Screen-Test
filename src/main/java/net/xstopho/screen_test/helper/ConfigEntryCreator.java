@@ -5,6 +5,10 @@ import net.xstopho.screen_test.config.TestConfigEntry;
 import net.xstopho.screen_test.config.TestEnums;
 import net.xstopho.screen_test.screen.entries.*;
 import net.xstopho.screen_test.screen.entries.base.BaseEntry;
+import net.xstopho.screen_test.screen.entries.primitiv.BooleanValueEntry;
+import net.xstopho.screen_test.screen.entries.primitiv.IntegerValueEntry;
+import net.xstopho.screen_test.screen.entries.primitiv.StringValueEntry;
+import net.xstopho.screen_test.screen.entries.reference.EnumValueEntry;
 
 import java.util.ArrayList;
 import java.util.List;

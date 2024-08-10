@@ -1,4 +1,4 @@
-package net.xstopho.screen_test.screen.entries;
+package net.xstopho.screen_test.screen.entries.primitiv;
 
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.network.chat.Component;

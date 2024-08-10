@@ -1,4 +1,4 @@
-package net.xstopho.screen_test.screen.entries;
+package net.xstopho.screen_test.screen.entries.primitiv;
 
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.EditBox;
@@ -10,19 +10,19 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Objects;
 import java.util.regex.Pattern;
 
-public class IntegerValueEntry extends ValueEntry<Integer> {
+public class DoubleValueEntry extends ValueEntry<Double> {
 
-    private final TestConfigEntry.IntegerEntry entry;
+    private final TestConfigEntry.DoubleEntry entry;
     private final EditBox editBox;
 
-    private final Pattern INTEGER_PATTERN = Pattern.compile("-?\\d*");
+    private final Pattern DOUBLE_PATTERN = Pattern.compile("[0-9]{0,10}(\\.[0-9]{0,2})?");
 
-    public IntegerValueEntry(Component entryLabel, @Nullable Component entryTooltip, TestConfigEntry.IntegerEntry entry) {
+    public DoubleValueEntry(Component entryLabel, @Nullable Component entryTooltip, TestConfigEntry.DoubleEntry entry) {
         super(entryLabel, entryTooltip);
         this.entry = entry;
 
         this.editBox = new EditBox(getFont(), 0, 0, getValueWidgetWidth(), 18, Component.literal(""));
-        this.editBox.setFilter(value -> INTEGER_PATTERN.matcher(value).matches());
+        this.editBox.setFilter(value -> DOUBLE_PATTERN.matcher(value).matches());
         this.editBox.setValue(entry.getConfigValue().toString());
         this.editBox.setResponder(string -> setUndoState(!Objects.equals(string, entry.getConfigValue().toString())));
 
@@ -38,15 +38,14 @@ public class IntegerValueEntry extends ValueEntry<Integer> {
 
         editBox.setX(xPos + entryWidth - getValueWidgetWidth());
         editBox.setY(yPos + 1);
-
         editBox.setWidth(getValueWidgetWidth() - (undoButton.getWidth() + resetButton.getWidth()) - 1);
 
         editBox.render(guiGraphics, mouseX, mouseY, partialTick);
     }
 
     @Override
-    public Integer getChangedValue() {
-        return Integer.parseInt(editBox.getValue());
+    public Double getChangedValue() {
+        return Double.parseDouble(editBox.getValue());
     }
 
     @Override

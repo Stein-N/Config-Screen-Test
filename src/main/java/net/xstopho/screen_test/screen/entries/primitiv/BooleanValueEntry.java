@@ -1,11 +1,10 @@
-package net.xstopho.screen_test.screen.entries;
+package net.xstopho.screen_test.screen.entries.primitiv;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.network.chat.Component;
 import net.xstopho.screen_test.config.TestConfigEntry;
-import net.xstopho.screen_test.screen.entries.base.BaseEntry;
 import net.xstopho.screen_test.screen.entries.base.ValueEntry;
 import org.jetbrains.annotations.Nullable;
 

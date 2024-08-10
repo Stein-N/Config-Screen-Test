@@ -1,4 +1,4 @@
-package net.xstopho.screen_test.screen.entries;
+package net.xstopho.screen_test.screen.entries.reference;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
