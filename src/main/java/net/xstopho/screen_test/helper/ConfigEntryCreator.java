@@ -10,6 +10,7 @@ import net.xstopho.screen_test.screen.entries.base.BaseEntry;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class ConfigEntryCreator {
 
@@ -42,7 +43,9 @@ public class ConfigEntryCreator {
         List<BaseEntry> list = new ArrayList<>();
 
         for (int i = 1; i <= 15; i++) {
-            list.add(new IntegerValueEntry(Component.literal("Test " + i), Component.literal("Test Tooltip " + i), new TestConfigEntry.IntegerEntry(10, 50)));
+            int defaultValue = new Random().nextInt(0, 100);
+            int configValue = defaultValue + new Random().nextInt(0, 100);
+            list.add(new IntegerValueEntry(Component.literal("Test " + i), Component.literal("Test Tooltip " + i), new TestConfigEntry.IntegerEntry(defaultValue, configValue)));
         }
 
         return list;
