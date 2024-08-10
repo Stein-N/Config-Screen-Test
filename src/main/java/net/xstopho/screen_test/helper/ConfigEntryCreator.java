@@ -8,6 +8,7 @@ import net.xstopho.screen_test.screen.entries.IntegerValueEntry;
 import net.xstopho.screen_test.screen.entries.StringValueEntry;
 import net.xstopho.screen_test.screen.entries.base.BaseEntry;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ConfigEntryCreator {
@@ -35,5 +36,15 @@ public class ConfigEntryCreator {
                 new IntegerValueEntry(Component.literal("Time to get kicked"), Component.literal("Time in Minutes where AFK Player gets kicked."), new TestConfigEntry.IntegerEntry(3, 10)),
                 new StringValueEntry(Component.literal("AFK kick Message"), Component.literal("Set what message should be displayed when the AFK Player gets kicked"), new TestConfigEntry.StringEntry("You where AFK.", "You where AFK for to long!"))
         );
+    }
+
+    public static List<BaseEntry> createDummies() {
+        List<BaseEntry> list = new ArrayList<>();
+
+        for (int i = 1; i <= 15; i++) {
+            list.add(new IntegerValueEntry(Component.literal("Test " + i), Component.literal("Test Tooltip " + i), new TestConfigEntry.IntegerEntry(10, 50)));
+        }
+
+        return list;
     }
 }
