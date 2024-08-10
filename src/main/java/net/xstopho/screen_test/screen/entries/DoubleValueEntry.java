@@ -32,24 +32,15 @@ public class DoubleValueEntry extends ValueEntry<Double> {
     @Override
     public void render(GuiGraphics guiGraphics, int index, int yPos, int xPos, int entryWidth, int entryHeight,
                        int mouseX, int mouseY, boolean hovered, float partialTick) {
+        super.render(guiGraphics, index, yPos, xPos, entryWidth, entryHeight, mouseX, mouseY, hovered, partialTick);
+
         drawStringWithTooltip(guiGraphics, entryLabel, entryTooltip, xPos, yPos + 6, mouseX, mouseY, hovered);
 
         editBox.setX(xPos + entryWidth - getValueWidgetWidth());
         editBox.setY(yPos + 1);
-
-        undoButton.setX(xPos + entryWidth - undoButton.getWidth() - resetButton.getWidth());
-        undoButton.setY(yPos);
-
-        resetButton.setX(xPos + entryWidth - resetButton.getWidth());
-        resetButton.setY(yPos);
-
         editBox.setWidth(getValueWidgetWidth() - (undoButton.getWidth() + resetButton.getWidth()) - 1);
 
         editBox.render(guiGraphics, mouseX, mouseY, partialTick);
-        undoButton.render(guiGraphics, mouseX, mouseY, partialTick);
-        resetButton.render(guiGraphics, mouseX, mouseY, partialTick);
-
-        guiGraphics.blit(undoSprite, undoButton.getX() + 3, undoButton.getY() + 3, 0.0F, 0.0F, 14, 14, 14, 14);
     }
 
     @Override

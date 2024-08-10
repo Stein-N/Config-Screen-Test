@@ -5,6 +5,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.network.chat.Component;
 import net.xstopho.screen_test.config.TestConfigEntry;
+import net.xstopho.screen_test.screen.entries.base.BaseEntry;
 import net.xstopho.screen_test.screen.entries.base.ValueEntry;
 import org.jetbrains.annotations.Nullable;
 
@@ -34,24 +35,15 @@ public class BooleanValueEntry extends ValueEntry<Boolean> {
     @Override
     public void render(GuiGraphics guiGraphics, int index, int yPos, int xPos, int entryWidth, int entryHeight,
                        int mouseX, int mouseY, boolean hovered, float partialTick) {
+        super.render(guiGraphics, index, yPos, xPos, entryWidth, entryHeight, mouseX, mouseY, hovered, partialTick);
+
         drawStringWithTooltip(guiGraphics, entryLabel, entryTooltip, xPos, yPos + 6, mouseX, mouseY, hovered);
 
         entryButton.setX(xPos + entryWidth - getValueWidgetWidth());
         entryButton.setY(yPos);
-
-        undoButton.setX(xPos + entryWidth - undoButton.getWidth() - resetButton.getWidth());
-        undoButton.setY(yPos);
-
-        resetButton.setX(xPos + entryWidth - resetButton.getWidth());
-        resetButton.setY(yPos);
-
         entryButton.setWidth(getValueWidgetWidth() - (undoButton.getWidth() + resetButton.getWidth()));
 
         entryButton.render(guiGraphics, mouseX, mouseY, partialTick);
-        undoButton.render(guiGraphics, mouseX, mouseY, partialTick);
-        resetButton.render(guiGraphics, mouseX, mouseY, partialTick);
-
-        guiGraphics.blit(undoSprite, undoButton.getX() + 3, undoButton.getY() + 3, 0.0F, 0.0F, 14, 14, 14, 14);
     }
 
     private void changeButtonState(Button button) {

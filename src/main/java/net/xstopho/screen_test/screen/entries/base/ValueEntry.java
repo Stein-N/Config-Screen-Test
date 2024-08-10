@@ -1,5 +1,6 @@
 package net.xstopho.screen_test.screen.entries.base;
 
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.network.chat.Component;
@@ -33,6 +34,22 @@ public abstract class ValueEntry<T> extends BaseEntry {
 
         this.children.add(undoButton);
         this.children.add(resetButton);
+    }
+
+    @Override
+    public void render(GuiGraphics guiGraphics, int index, int yPos, int xPos, int entryWidth, int entryHeight,
+                       int mouseX, int mouseY, boolean hovered, float partialTick) {
+
+        undoButton.setX(xPos + entryWidth - undoButton.getWidth() - resetButton.getWidth());
+        undoButton.setY(yPos);
+
+        resetButton.setX(xPos + entryWidth - resetButton.getWidth());
+        resetButton.setY(yPos);
+
+        undoButton.render(guiGraphics, mouseX, mouseY, partialTick);
+        resetButton.render(guiGraphics, mouseX, mouseY, partialTick);
+
+        guiGraphics.blit(undoSprite, undoButton.getX() + 3, undoButton.getY() + 3, 0.0F, 0.0F, 14, 14, 14, 14);
     }
 
     public int getValueWidgetWidth() {
