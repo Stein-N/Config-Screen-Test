@@ -6,12 +6,14 @@ import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.xstopho.screen_test.ScreenTest;
+import net.xstopho.screen_test.config.TestConfigEntry;
 import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings("all")
 public abstract class ValueEntry<T> extends BaseEntry {
 
     protected final Component entryLabel, entryTooltip;
+    protected final TestConfigEntry<T> entry;
 
     private final Component undoComponent = Component.literal("");
     private final Component undoTooltip = Component.translatable("screen-test.components.undo.tooltip");
@@ -23,9 +25,10 @@ public abstract class ValueEntry<T> extends BaseEntry {
     protected final Button undoButton, resetButton;
     private final int valueWidgetWidth = 150;
 
-    public ValueEntry(Component entryLabel, @Nullable Component entryTooltip) {
+    public ValueEntry(Component entryLabel, @Nullable Component entryTooltip, TestConfigEntry<T> entry) {
         this.entryLabel = entryLabel;
         this.entryTooltip = entryTooltip;
+        this.entry = entry;
 
         undoButton = Button.builder(undoComponent, b -> this.undoChanges()).tooltip(Tooltip.create(undoTooltip)).bounds(0, 0, 20, 20).build();
         resetButton = Button.builder(resetComponent, b -> this.resetValues()).tooltip(Tooltip.create(resetTooltip)).bounds(0, 0, 50, 20).build();
@@ -58,6 +61,12 @@ public abstract class ValueEntry<T> extends BaseEntry {
 
     protected void setUndoState(boolean bool) {
         undoButton.active = bool;
+    }
+
+    @Override
+    public void saveChangedValue() {
+        entry.setConfigValue(getChangedValue());
+        setUndoState(false);
     }
 
     public abstract T getChangedValue();

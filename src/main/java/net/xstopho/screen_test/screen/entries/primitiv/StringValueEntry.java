@@ -11,13 +11,11 @@ import java.util.Objects;
 
 public class StringValueEntry extends ValueEntry<String> {
 
-    private final TestConfigEntry.StringEntry entry;
     private final EditBox editBox;
 
 
     public StringValueEntry(Component entryLabel, @Nullable Component entryTooltip, TestConfigEntry.StringEntry entry) {
-        super(entryLabel, entryTooltip);
-        this.entry = entry;
+        super(entryLabel, entryTooltip, entry);
 
         this.editBox = new EditBox(getFont(), 0, 0, getValueWidgetWidth() + 50, 18, Component.literal(""));
         this.editBox.setResponder(string -> setUndoState(!Objects.equals(string, entry.getConfigValue())));
@@ -44,12 +42,6 @@ public class StringValueEntry extends ValueEntry<String> {
     @Override
     public String getChangedValue() {
         return editBox.getValue();
-    }
-
-    @Override
-    public void saveChangedValue() {
-        entry.setConfigValue(getChangedValue());
-        setUndoState(false);
     }
 
     @Override

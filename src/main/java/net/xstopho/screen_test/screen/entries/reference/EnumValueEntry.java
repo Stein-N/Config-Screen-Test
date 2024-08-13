@@ -22,7 +22,7 @@ public class EnumValueEntry<T extends Enum<T>> extends ValueEntry<T> {
     private final Screen currentScreen = Minecraft.getInstance().screen;
 
     public EnumValueEntry(Component entryLabel, @Nullable Component entryTooltip, TestConfigEntry.EnumConfigEntry<T> entry) {
-        super(entryLabel, entryTooltip);
+        super(entryLabel, entryTooltip, entry);
         this.entry = entry;
 
         this.editBox = new EditBox(getFont(), 0, 0, getValueWidgetWidth() + 50, 18, Component.literal(""));
@@ -65,12 +65,6 @@ public class EnumValueEntry<T extends Enum<T>> extends ValueEntry<T> {
     @Override
     public T getChangedValue() {
         return Enum.valueOf(entry.getEnumClass(), editBox.getValue());
-    }
-
-    @Override
-    public void saveChangedValue() {
-        entry.setConfigValue(getChangedValue());
-        setUndoState(false);
     }
 
     @Override

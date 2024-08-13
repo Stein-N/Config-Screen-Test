@@ -12,7 +12,6 @@ import java.util.Objects;
 
 public class BooleanValueEntry extends ValueEntry<Boolean> {
 
-    private final TestConfigEntry.BooleanEntry entry;
     private final Button entryButton;
 
     private boolean buttonState;
@@ -22,8 +21,7 @@ public class BooleanValueEntry extends ValueEntry<Boolean> {
 
 
     public BooleanValueEntry(Component entryLabel, @Nullable Component entryTooltip, TestConfigEntry.BooleanEntry entry) {
-        super(entryLabel, entryTooltip);
-        this.entry = entry;
+        super(entryLabel, entryTooltip, entry);
         this.buttonState = entry.getConfigValue();
 
         this.entryButton = Button.builder(buttonState ? enabled : disabled, this::changeButtonState).bounds(0, 0, getValueWidgetWidth(), 20).build();
@@ -57,12 +55,6 @@ public class BooleanValueEntry extends ValueEntry<Boolean> {
     @Override
     public Boolean getChangedValue() {
         return buttonState;
-    }
-
-    @Override
-    public void saveChangedValue() {
-        entry.setConfigValue(getChangedValue());
-        setUndoState(false);
     }
 
     @Override
