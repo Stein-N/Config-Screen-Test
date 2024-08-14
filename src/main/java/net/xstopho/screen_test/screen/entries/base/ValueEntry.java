@@ -17,7 +17,7 @@ public abstract class ValueEntry<T> extends BaseEntry {
 
     private final Component undoComponent = Component.literal("");
     private final Component undoTooltip = Component.translatable("screen-test.components.undo.tooltip");
-    protected final ResourceLocation undoSprite = ResourceLocation.fromNamespaceAndPath(ScreenTest.MOD_ID, "textures/gui/sprites/undo.png");
+    private final ResourceLocation undoSprite = ResourceLocation.fromNamespaceAndPath(ScreenTest.MOD_ID, "textures/gui/sprites/undo.png");
 
     private final Component resetComponent = Component.translatable("screen-test.components.reset.label");
     private final Component resetTooltip = Component.translatable("screen-test.components.reset.tooltip");
