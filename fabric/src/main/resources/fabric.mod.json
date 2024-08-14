@@ -1,0 +1,25 @@
+{
+	"schemaVersion": 1,
+	"id": "${mod_id}",
+	"version": "${version}",
+	"name": "${mod_name}",
+	"description": "${mod_description}",
+	"authors": [ "${mod_author}" ],
+	"contact": {
+		"homepage": "https://github.com/Stein-N",
+		"sources": "https://github.com/FabricMC/fabric-example-mod"
+	},
+	"license": "${mod_license}",
+	"icon": "icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [ "net.xstopho.config_screen.ConfigScreen" ],
+		"modmenu": [ "net.xstopho.config_screen.compat.ModMenuCompat" ]
+	},
+	"depends": {
+		"fabric-api": "*",
+		"fabricloader": "*",
+		"minecraft": "${minecraft_version}",
+		"java": "${java_version}"
+	}
+}

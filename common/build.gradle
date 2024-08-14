@@ -1,0 +1,17 @@
+plugins {
+    id 'ml-common'
+    id 'net.neoforged.moddev'
+}
+
+neoForge {
+    neoFormVersion = neoform_version
+
+    parchment {
+        minecraftVersion = parchment_mc_version
+        mappingsVersion = parchment_version
+    }
+}
+
+dependencies {
+    compileOnly group:'org.spongepowered', name:'mixin', version:'0.8.5'
+}
