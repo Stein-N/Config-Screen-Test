@@ -30,8 +30,24 @@ public class TestConfigEntry<T> implements Supplier<T> {
         this.configValue = value;
     }
 
-    public static class IntegerEntry extends TestConfigEntry<Integer> {
-        public IntegerEntry(Integer defaultValue, Integer configValue) {
+
+    //**************************************************//
+    //               Primitive Datatypes                //
+    //**************************************************//
+    public static class BooleanEntry extends TestConfigEntry<Boolean> {
+        public BooleanEntry(Boolean defaultValue, Boolean configValue) {
+            super(defaultValue, configValue);
+        }
+    }
+
+    public static class ByteEntry extends TestConfigEntry<Byte> {
+        public ByteEntry(Byte defaultValue, Byte configValue) {
+            super(defaultValue, configValue);
+        }
+    }
+
+    public static class CharEntry extends TestConfigEntry<Character> {
+        public CharEntry(Character defaultValue, Character configValue) {
             super(defaultValue, configValue);
         }
     }
@@ -42,20 +58,35 @@ public class TestConfigEntry<T> implements Supplier<T> {
         }
     }
 
-    public static class BooleanEntry extends TestConfigEntry<Boolean> {
-        public BooleanEntry(Boolean defaultValue, Boolean configValue) {
-            super(defaultValue, configValue);
-        }
-    }
-
-    public static class StringEntry extends TestConfigEntry<String> {
-        public StringEntry(String defaultValue, String configValue) {
-            super(defaultValue, configValue);
-        }
-    }
-
     public static class FloatEntry extends TestConfigEntry<Float> {
         public FloatEntry(Float defaultValue, Float configValue) {
+            super(defaultValue, configValue);
+        }
+    }
+
+    public static class IntegerEntry extends TestConfigEntry<Integer> {
+        public IntegerEntry(Integer defaultValue, Integer configValue) {
+            super(defaultValue, configValue);
+        }
+    }
+
+    public static class LongEntry extends TestConfigEntry<Long> {
+        public LongEntry(Long defaultValue, Long configValue) {
+            super(defaultValue, configValue);
+        }
+    }
+
+    public static class ShortEntry extends TestConfigEntry<Short> {
+        public ShortEntry(Short defaultValue, Short configValue) {
+            super(defaultValue, configValue);
+        }
+    }
+
+    //**************************************************//
+    //               Reference Datatypes                //
+    //**************************************************//
+    public static class StringEntry extends TestConfigEntry<String> {
+        public StringEntry(String defaultValue, String configValue) {
             super(defaultValue, configValue);
         }
     }

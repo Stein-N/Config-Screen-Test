@@ -44,7 +44,7 @@ public class ModConfigScreen extends Screen {
 
     @Override
     protected void init() {
-        if (commonEntries.isEmpty()) commonEntries = ConfigEntryCreator.createCommonEntries();
+        if (commonEntries.isEmpty()) commonEntries = ConfigEntryCreator.createAllEntries();
         if (clientEntries.isEmpty()) clientEntries = ConfigEntryCreator.createClientEntries();
         if (serverEntries.isEmpty()) serverEntries = ConfigEntryCreator.createServerEntries();
 
@@ -58,7 +58,10 @@ public class ModConfigScreen extends Screen {
         this.addRenderableWidget(this.tabNavigationBar);
 
         LinearLayout footer = this.layout.addToFooter(LinearLayout.horizontal().spacing(8));
-        footer.addChild(Button.builder(saveComponent, b -> processEntries(BaseEntry::saveChangedValue)).width(100).build());
+        footer.addChild(Button.builder(saveComponent, b -> {
+            processEntries(BaseEntry::saveChangedValue);
+            this.onClose();
+        }).width(100).build());
         footer.addChild(Button.builder(resetComponent, b -> processEntries(BaseEntry::resetValues)).width(100).build());
         footer.addChild(Button.builder(closeComponent, button -> this.onClose()).width(100).build());
 

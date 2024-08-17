@@ -1,5 +1,6 @@
 package net.xstopho.config_screen.screen.entries.primitiv;
 
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.network.chat.Component;
 import net.xstopho.config_screen.config.TestConfigEntry;
@@ -13,21 +14,34 @@ public class FloatValueEntry extends ValueEntry<Float> {
 
     private final EditBox editBox;
 
-    private final Pattern FLOAT_PATTERN = Pattern.compile("[0-9]{0,10}(\\.[0-9]{0,2})?");
+    private final Pattern FLOAT_PATTERN = Pattern.compile("[0-9]{0,10}(\\.[0-9]{0,10})?");
 
-    public FloatValueEntry(Component entryLabel, @Nullable Component entryTooltip, TestConfigEntry.FloatEntry entry) {
+    public FloatValueEntry(Component entryLabel, @Nullable Component entryTooltip, TestConfigEntry<Float> entry) {
         super(entryLabel, entryTooltip, entry);
 
         this.editBox = new EditBox(getFont(), 0, 0, getValueWidgetWidth(), 18, Component.literal(""));
         this.editBox.setFilter(value -> FLOAT_PATTERN.matcher(value).matches());
         this.editBox.setValue(entry.getConfigValue().toString());
-        this.editBox.setResponder(string -> setUndoState(!Objects.equals(string, entry.getConfigValue().toString())));
+        this.editBox.setResponder(value -> setUndoState(!Objects.equals(value, entry.getConfigValue().toString())));
 
         this.children.add(editBox);
     }
 
     @Override
+    public void render(GuiGraphics guiGraphics, int index, int yPos, int xPos, int entryWidth, int entryHeight,
+                       int mouseX, int mouseY, boolean hovered, float partialTick) {
+        super.render(guiGraphics, index, yPos, xPos, entryWidth, entryHeight, mouseX, mouseY, hovered, partialTick);
+
+        editBox.setX(xPos + entryWidth - getValueWidgetWidth());
+        editBox.setY(yPos + 1);
+        editBox.setWidth(getValueWidgetWidth() - (undoButton.getWidth() + resetButton.getWidth()) - 1);
+
+        editBox.render(guiGraphics, mouseX, mouseY, partialTick);
+    }
+
+    @Override
     public Float getChangedValue() {
+        if (editBox.getValue().isEmpty()) return entry.getConfigValue();
         return Float.valueOf(editBox.getValue());
     }
 

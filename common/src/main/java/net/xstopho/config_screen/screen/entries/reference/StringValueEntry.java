@@ -1,4 +1,4 @@
-package net.xstopho.config_screen.screen.entries.primitiv;
+package net.xstopho.config_screen.screen.entries.reference;
 
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.EditBox;
@@ -8,21 +8,20 @@ import net.xstopho.config_screen.screen.entries.base.ValueEntry;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
-import java.util.regex.Pattern;
 
-public class IntegerValueEntry extends ValueEntry<Integer> {
+public class StringValueEntry extends ValueEntry<String> {
 
     private final EditBox editBox;
 
-    private final Pattern INTEGER_PATTERN = Pattern.compile("-?\\d*");
 
-    public IntegerValueEntry(Component entryLabel, @Nullable Component entryTooltip, TestConfigEntry<Integer> entry) {
+    public StringValueEntry(Component entryLabel, @Nullable Component entryTooltip, TestConfigEntry.StringEntry entry) {
         super(entryLabel, entryTooltip, entry);
 
-        this.editBox = new EditBox(getFont(), 0, 0, getValueWidgetWidth(), 18, Component.literal(""));
-        this.editBox.setFilter(value -> INTEGER_PATTERN.matcher(value).matches());
-        this.editBox.setValue(entry.getConfigValue().toString());
-        this.editBox.setResponder(value -> setUndoState(!Objects.equals(value, entry.getConfigValue().toString())));
+        this.editBox = new EditBox(getFont(), 0, 0, getValueWidgetWidth() + 50, 18, Component.literal(""));
+        this.editBox.setResponder(string -> setUndoState(!Objects.equals(string, entry.getConfigValue())));
+        this.editBox.setValue(entry.getConfigValue());
+        this.editBox.setCursorPosition(0);
+        this.editBox.setHighlightPos(0);
 
         this.children.add(editBox);
     }
@@ -34,27 +33,27 @@ public class IntegerValueEntry extends ValueEntry<Integer> {
 
         drawStringWithTooltip(guiGraphics, entryLabel, entryTooltip, xPos, yPos + 6, mouseX, mouseY, hovered);
 
-        editBox.setX(xPos + entryWidth - getValueWidgetWidth());
+        editBox.setX(xPos + entryWidth - (getValueWidgetWidth() + 50));
         editBox.setY(yPos + 1);
 
-        editBox.setWidth(getValueWidgetWidth() - (undoButton.getWidth() + resetButton.getWidth()) - 1);
+        editBox.setWidth((getValueWidgetWidth() + 50) - (undoButton.getWidth() + resetButton.getWidth()) - 1);
 
         editBox.render(guiGraphics, mouseX, mouseY, partialTick);
     }
 
     @Override
-    public Integer getChangedValue() {
+    public String getChangedValue() {
         if (editBox.getValue().isEmpty()) return entry.getConfigValue();
-        return Integer.valueOf(editBox.getValue());
+        return editBox.getValue();
     }
 
     @Override
     public void undoChanges() {
-        editBox.setValue(this.entry.getConfigValue().toString());
+        editBox.setValue(this.entry.getConfigValue());
     }
 
     @Override
     public void resetValues() {
-        editBox.setValue(this.entry.getDefaultValue().toString());
+        editBox.setValue(this.entry.getDefaultValue());
     }
 }

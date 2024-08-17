@@ -4,7 +4,7 @@
   "screen-test.components.undo.tooltip": "Change the Value back to the Config Value.",
   "screen-test.components.boolean.enabled": "Enabled",
   "screen-test.components.boolean.disabled": "Disabled",
-  "screen-test.components.footer.save.label": "Save all",
+  "screen-test.components.footer.save.label": "Save and Close",
   "screen-test.components.footer.close.label": "Close",
   "screen-test.components.footer.reset.label": "Reset all"
 }

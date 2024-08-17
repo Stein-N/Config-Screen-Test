@@ -20,7 +20,7 @@ public class BooleanValueEntry extends ValueEntry<Boolean> {
     private final Component disabled = Component.translatable("screen-test.components.boolean.disabled").withStyle(ChatFormatting.RED);
 
 
-    public BooleanValueEntry(Component entryLabel, @Nullable Component entryTooltip, TestConfigEntry.BooleanEntry entry) {
+    public BooleanValueEntry(Component entryLabel, @Nullable Component entryTooltip, TestConfigEntry<Boolean> entry) {
         super(entryLabel, entryTooltip, entry);
         this.buttonState = entry.getConfigValue();
 
@@ -33,8 +33,6 @@ public class BooleanValueEntry extends ValueEntry<Boolean> {
     public void render(GuiGraphics guiGraphics, int index, int yPos, int xPos, int entryWidth, int entryHeight,
                        int mouseX, int mouseY, boolean hovered, float partialTick) {
         super.render(guiGraphics, index, yPos, xPos, entryWidth, entryHeight, mouseX, mouseY, hovered, partialTick);
-
-        drawStringWithTooltip(guiGraphics, entryLabel, entryTooltip, xPos, yPos + 6, mouseX, mouseY, hovered);
 
         entryButton.setX(xPos + entryWidth - getValueWidgetWidth());
         entryButton.setY(yPos);

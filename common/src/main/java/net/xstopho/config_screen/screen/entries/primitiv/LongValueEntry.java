@@ -10,17 +10,17 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Objects;
 import java.util.regex.Pattern;
 
-public class DoubleValueEntry extends ValueEntry<Double> {
+public class LongValueEntry extends ValueEntry<Long> {
 
     private final EditBox editBox;
 
-    private final Pattern DOUBLE_PATTERN = Pattern.compile("[0-9]{0,10}(\\.[0-9]{0,10})?");
+    private final Pattern LONG_PATTERN = Pattern.compile("[0-9]{0,15}");
 
-    public DoubleValueEntry(Component entryLabel, @Nullable Component entryTooltip, TestConfigEntry<Double> entry) {
+    public LongValueEntry(Component entryLabel, @Nullable Component entryTooltip, TestConfigEntry<Long> entry) {
         super(entryLabel, entryTooltip, entry);
 
         this.editBox = new EditBox(getFont(), 0, 0, getValueWidgetWidth(), 18, Component.literal(""));
-        this.editBox.setFilter(value -> DOUBLE_PATTERN.matcher(value).matches());
+        this.editBox.setFilter(value -> LONG_PATTERN.matcher(value).matches());
         this.editBox.setValue(entry.getConfigValue().toString());
         this.editBox.setResponder(value -> setUndoState(!Objects.equals(value, entry.getConfigValue().toString())));
 
@@ -32,6 +32,8 @@ public class DoubleValueEntry extends ValueEntry<Double> {
                        int mouseX, int mouseY, boolean hovered, float partialTick) {
         super.render(guiGraphics, index, yPos, xPos, entryWidth, entryHeight, mouseX, mouseY, hovered, partialTick);
 
+        drawStringWithTooltip(guiGraphics, entryLabel, entryTooltip, xPos, yPos + 6, mouseX, mouseY, hovered);
+
         editBox.setX(xPos + entryWidth - getValueWidgetWidth());
         editBox.setY(yPos + 1);
         editBox.setWidth(getValueWidgetWidth() - (undoButton.getWidth() + resetButton.getWidth()) - 1);
@@ -40,9 +42,9 @@ public class DoubleValueEntry extends ValueEntry<Double> {
     }
 
     @Override
-    public Double getChangedValue() {
+    public Long getChangedValue() {
         if (editBox.getValue().isEmpty()) return entry.getConfigValue();
-        return Double.valueOf(editBox.getValue());
+        return Long.valueOf(editBox.getValue());
     }
 
     @Override

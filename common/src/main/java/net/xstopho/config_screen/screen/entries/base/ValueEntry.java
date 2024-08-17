@@ -43,6 +43,8 @@ public abstract class ValueEntry<T> extends BaseEntry {
     public void render(GuiGraphics guiGraphics, int index, int yPos, int xPos, int entryWidth, int entryHeight,
                        int mouseX, int mouseY, boolean hovered, float partialTick) {
 
+        drawStringWithTooltip(guiGraphics, entryLabel, entryTooltip, xPos, yPos + 6, mouseX, mouseY, hovered);
+
         undoButton.setX(xPos + entryWidth - undoButton.getWidth() - resetButton.getWidth());
         undoButton.setY(yPos);
 

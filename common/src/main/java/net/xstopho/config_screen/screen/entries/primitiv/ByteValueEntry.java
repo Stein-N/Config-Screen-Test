@@ -10,17 +10,17 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Objects;
 import java.util.regex.Pattern;
 
-public class DoubleValueEntry extends ValueEntry<Double> {
+public class ByteValueEntry extends ValueEntry<Byte> {
 
     private final EditBox editBox;
 
-    private final Pattern DOUBLE_PATTERN = Pattern.compile("[0-9]{0,10}(\\.[0-9]{0,10})?");
+    private final Pattern BYTE_PATTERN = Pattern.compile("^(?:-?(?:12[0-7]|1[01][0-9]|[1-9]?[0-9])|-)?$");
 
-    public DoubleValueEntry(Component entryLabel, @Nullable Component entryTooltip, TestConfigEntry<Double> entry) {
+    public ByteValueEntry(Component entryLabel, @Nullable Component entryTooltip, TestConfigEntry<Byte> entry) {
         super(entryLabel, entryTooltip, entry);
 
         this.editBox = new EditBox(getFont(), 0, 0, getValueWidgetWidth(), 18, Component.literal(""));
-        this.editBox.setFilter(value -> DOUBLE_PATTERN.matcher(value).matches());
+        this.editBox.setFilter(value -> BYTE_PATTERN.matcher(value).matches());
         this.editBox.setValue(entry.getConfigValue().toString());
         this.editBox.setResponder(value -> setUndoState(!Objects.equals(value, entry.getConfigValue().toString())));
 
@@ -40,9 +40,11 @@ public class DoubleValueEntry extends ValueEntry<Double> {
     }
 
     @Override
-    public Double getChangedValue() {
-        if (editBox.getValue().isEmpty()) return entry.getConfigValue();
-        return Double.valueOf(editBox.getValue());
+    public Byte getChangedValue() {
+        if (editBox.getValue().isEmpty()) {
+            return entry.getConfigValue();
+        }
+        return Byte.valueOf(editBox.getValue());
     }
 
     @Override
