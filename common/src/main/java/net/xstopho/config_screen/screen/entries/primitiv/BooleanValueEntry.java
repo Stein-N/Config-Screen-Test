@@ -1,9 +1,9 @@
 package net.xstopho.config_screen.screen.entries.primitiv;
 
-import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.network.chat.Component;
+import net.xstopho.config_screen.ConfigScreenConstants;
 import net.xstopho.config_screen.config.TestConfigEntry;
 import net.xstopho.config_screen.screen.entries.base.ValueEntry;
 import org.jetbrains.annotations.Nullable;
@@ -16,8 +16,8 @@ public class BooleanValueEntry extends ValueEntry<Boolean> {
 
     private boolean buttonState;
 
-    private final Component enabled = Component.translatable("screen-test.components.boolean.enabled").withStyle(ChatFormatting.GREEN);
-    private final Component disabled = Component.translatable("screen-test.components.boolean.disabled").withStyle(ChatFormatting.RED);
+    private final Component enabled = ConfigScreenConstants.BOOLEAN_ENABLED;
+    private final Component disabled = ConfigScreenConstants.BOOLEAN_DISABLED;
 
 
     public BooleanValueEntry(Component entryLabel, @Nullable Component entryTooltip, TestConfigEntry<Boolean> entry) {

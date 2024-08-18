@@ -9,6 +9,7 @@ import net.xstopho.config_screen.config.TestConfigEntry;
 import net.xstopho.config_screen.screen.SingleSelectionScreen;
 import net.xstopho.config_screen.screen.entries.base.BaseEntry;
 import net.xstopho.config_screen.screen.entries.base.ValueEntry;
+import net.xstopho.config_screen.screen.entries.selection.EnumSelectionEntry;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.LinkedList;
@@ -56,6 +57,7 @@ public class EnumValueEntry<T extends Enum<T>> extends ValueEntry<T> {
         List<BaseEntry> list = new LinkedList<>();
 
         for (Enum<T> value : entry.getEnumValues()) {
+            //TODO: Tooltip will be come from the ConfigEntry
             list.add(new EnumSelectionEntry<>(currentScreen, Component.literal(value.toString()), Component.literal("Description for " + value), editBox, value));
         }
 

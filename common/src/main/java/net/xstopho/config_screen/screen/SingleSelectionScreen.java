@@ -9,7 +9,8 @@ import net.minecraft.client.gui.layouts.HeaderAndFooterLayout;
 import net.minecraft.client.gui.layouts.LinearLayout;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
-import net.xstopho.config_screen.screen.components.CategoryEntryList;
+import net.xstopho.config_screen.ConfigScreenConstants;
+import net.xstopho.config_screen.screen.widgets.CategoryEntryList;
 import net.xstopho.config_screen.screen.entries.base.BaseEntry;
 
 import java.util.List;
@@ -21,17 +22,17 @@ public class SingleSelectionScreen extends Screen {
     private final HeaderAndFooterLayout layout;
     private final Screen previous;
 
-    private final int HEADER_HEIGHT = 22;
-    private final int FOOTER_HEIGHT = 34;
-    private final Component closeComponent = Component.translatable("screen-test.components.footer.close.label");
+    private final int headerHeight = ConfigScreenConstants.HEADER_HEIGHT;
+    private final int footerHeight = ConfigScreenConstants.FOOTER_HEIGHT;
+    private final Component closeComponent = ConfigScreenConstants.CLOSE;
 
     public SingleSelectionScreen(Screen previous, Component component, List<BaseEntry> entries) {
         super(component.copy().withStyle(ChatFormatting.GOLD));
         this.previous = previous;
 
-        this.layout = new HeaderAndFooterLayout(this, HEADER_HEIGHT, FOOTER_HEIGHT);
+        this.layout = new HeaderAndFooterLayout(this, headerHeight, footerHeight);
         this.list = new CategoryEntryList(Minecraft.getInstance(), this.width,
-                this.height - (HEADER_HEIGHT + FOOTER_HEIGHT), 0, 24, entries);
+                this.height - (headerHeight + footerHeight), 0, 24, entries);
     }
 
     @Override
@@ -43,7 +44,7 @@ public class SingleSelectionScreen extends Screen {
         this.list.visitWidgets(this::addRenderableWidget);
 
         this.layout.arrangeElements();
-        this.list.setRectangle(this.width, this.height - (HEADER_HEIGHT + FOOTER_HEIGHT), 0, HEADER_HEIGHT);
+        this.list.setRectangle(this.width, this.height - (headerHeight + footerHeight), 0, headerHeight);
     }
 
     @Override
@@ -51,9 +52,9 @@ public class SingleSelectionScreen extends Screen {
         this.renderBackground(guiGraphics, mouseX, mouseY, partialTicks);
         super.render(guiGraphics, mouseX, mouseY, partialTicks);
 
-        guiGraphics.drawString(font, getTitle(), (this.width / 2) - (font.width(getTitle().getString()) / 2), (this.HEADER_HEIGHT / 2) - (font.lineHeight / 2), -1);
-        guiGraphics.blit(Screen.FOOTER_SEPARATOR, 0, this.height - FOOTER_HEIGHT, 0.0F, 0.0F, this.width, 2, 32, 2);
-        guiGraphics.blit(Screen.HEADER_SEPARATOR, 0, HEADER_HEIGHT, 0.0F, 0.0F, this.width, 2, 32, 2);
+        guiGraphics.drawString(font, getTitle(), (this.width / 2) - (font.width(getTitle().getString()) / 2), (headerHeight / 2) - (font.lineHeight / 2), -1);
+        guiGraphics.blit(Screen.FOOTER_SEPARATOR, 0, this.height - footerHeight, 0.0F, 0.0F, this.width, 2, 32, 2);
+        guiGraphics.blit(Screen.HEADER_SEPARATOR, 0, headerHeight, 0.0F, 0.0F, this.width, 2, 32, 2);
     }
 
     @Override

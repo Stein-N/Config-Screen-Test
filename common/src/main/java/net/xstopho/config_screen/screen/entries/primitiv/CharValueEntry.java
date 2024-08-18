@@ -13,13 +13,13 @@ import java.util.regex.Pattern;
 public class CharValueEntry extends ValueEntry<Character> {
 
     private final EditBox editBox;
-    private final Pattern CHAR_PATTERN = Pattern.compile("[a-zA-Z]?");
+    private final Pattern charPattern = Pattern.compile("[a-zA-Z]?");
 
     public CharValueEntry(Component entryLabel, @Nullable Component entryTooltip, TestConfigEntry<Character> entry) {
         super(entryLabel, entryTooltip, entry);
 
         this.editBox = new EditBox(getFont(), 0, 0, getValueWidgetWidth(), 18, Component.literal(""));
-        this.editBox.setFilter(value -> CHAR_PATTERN.matcher(value).matches());
+        this.editBox.setFilter(value -> charPattern.matcher(value).matches());
         this.editBox.setValue(entry.getConfigValue().toString());
         this.editBox.setResponder(value -> setUndoState(!Objects.equals(value, entry.getConfigValue().toString())));
 

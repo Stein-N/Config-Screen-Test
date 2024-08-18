@@ -14,13 +14,13 @@ public class IntegerValueEntry extends ValueEntry<Integer> {
 
     private final EditBox editBox;
 
-    private final Pattern INTEGER_PATTERN = Pattern.compile("-?\\d*");
+    private final Pattern integerPattern = Pattern.compile("-?\\d*");
 
     public IntegerValueEntry(Component entryLabel, @Nullable Component entryTooltip, TestConfigEntry<Integer> entry) {
         super(entryLabel, entryTooltip, entry);
 
         this.editBox = new EditBox(getFont(), 0, 0, getValueWidgetWidth(), 18, Component.literal(""));
-        this.editBox.setFilter(value -> INTEGER_PATTERN.matcher(value).matches());
+        this.editBox.setFilter(value -> integerPattern.matcher(value).matches());
         this.editBox.setValue(entry.getConfigValue().toString());
         this.editBox.setResponder(value -> setUndoState(!Objects.equals(value, entry.getConfigValue().toString())));
 

@@ -15,12 +15,12 @@ public abstract class ValueEntry<T> extends BaseEntry {
     protected final Component entryLabel, entryTooltip;
     protected final TestConfigEntry<T> entry;
 
-    private final Component undoComponent = Component.literal("");
-    private final Component undoTooltip = Component.translatable("screen-test.components.undo.tooltip");
+    private final Component undoComponent = ConfigScreenConstants.UNDO;
+    private final Component undoTooltip = ConfigScreenConstants.UNDO_TOOLTIP;
     private final ResourceLocation undoSprite = ResourceLocation.fromNamespaceAndPath(ConfigScreenConstants.MOD_ID, "textures/gui/sprites/undo.png");
 
-    private final Component resetComponent = Component.translatable("screen-test.components.reset.label");
-    private final Component resetTooltip = Component.translatable("screen-test.components.reset.tooltip");
+    private final Component resetComponent = ConfigScreenConstants.RESET;
+    private final Component resetTooltip = ConfigScreenConstants.RESET_TOOLTIP;
 
     protected final Button undoButton, resetButton;
     private final int valueWidgetWidth = 150;

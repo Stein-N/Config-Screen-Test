@@ -14,13 +14,13 @@ public class ShortValueEntry extends ValueEntry<Short> {
 
     private final EditBox editBox;
 
-    private final Pattern SHORT_PATTERN = Pattern.compile("^(-?(3276[0-7]|327[0-5]\\d|32[0-6]\\d{2}|3[01]\\d{3}|[12]\\d{4}|\\d{1,4})|-$)?$");
+    private final Pattern shortPattern = Pattern.compile("^(-?(3276[0-7]|327[0-5]\\d|32[0-6]\\d{2}|3[01]\\d{3}|[12]\\d{4}|\\d{1,4})|-$)?$");
 
     public ShortValueEntry(Component entryLabel, @Nullable Component entryTooltip, TestConfigEntry<Short> entry) {
         super(entryLabel, entryTooltip, entry);
 
         this.editBox = new EditBox(getFont(), 0, 0, getValueWidgetWidth(), 18, Component.literal(""));
-        this.editBox.setFilter(value -> SHORT_PATTERN.matcher(value).matches());
+        this.editBox.setFilter(value -> shortPattern.matcher(value).matches());
         this.editBox.setValue(entry.getConfigValue().toString());
         this.editBox.setResponder(value -> setUndoState(!Objects.equals(value, entry.getConfigValue().toString())));
 

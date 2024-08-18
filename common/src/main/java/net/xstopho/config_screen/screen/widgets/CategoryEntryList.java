@@ -1,8 +1,7 @@
-package net.xstopho.config_screen.screen.components;
+package net.xstopho.config_screen.screen.widgets;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.ContainerObjectSelectionList;
-import net.minecraft.client.gui.screens.Screen;
 import net.xstopho.config_screen.screen.entries.base.BaseEntry;
 
 public class CategoryEntryList extends ContainerObjectSelectionList<BaseEntry> {
@@ -14,7 +13,6 @@ public class CategoryEntryList extends ContainerObjectSelectionList<BaseEntry> {
 
     @Override
     public int getRowWidth() {
-        Screen screen = Minecraft.getInstance().screen;
-        return this.width - (screen.width / 4);
+        return this.width - (Minecraft.getInstance().screen.width / 4);
     }
 }

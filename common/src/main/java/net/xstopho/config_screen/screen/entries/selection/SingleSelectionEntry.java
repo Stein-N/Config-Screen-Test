@@ -1,4 +1,4 @@
-package net.xstopho.config_screen.screen.entries.reference;
+package net.xstopho.config_screen.screen.entries.selection;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -9,30 +9,33 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.xstopho.config_screen.screen.entries.base.BaseEntry;
 
-public class EnumSelectionEntry<T extends Enum<T>> extends BaseEntry {
 
-    private final Button valueButton;
+public abstract class SingleSelectionEntry extends BaseEntry {
 
-    public EnumSelectionEntry(Screen previous, Component entryLabel, Component entryTooltip, EditBox parentBox, Enum<T> value) {
+    protected final Button button;
 
-        this.valueButton = Button.builder(entryLabel, b -> {
+    public SingleSelectionEntry(Screen previous, Component entryLabel, Component entryTooltip, EditBox parent) {
+
+        this.button = Button.builder(entryLabel, b -> {
             Minecraft.getInstance().setScreen(previous);
-            parentBox.setValue(value.toString());
-            parentBox.setCursorPosition(0);
-            parentBox.setHighlightPos(0);
-        }).tooltip(Tooltip.create(entryTooltip)).width(150).build();
+            parent.setValue(this.valueToString());
+            parent.setCursorPosition(0);
+            parent.setHighlightPos(0);
+        }).tooltip(Tooltip.create(entryTooltip)).build();
 
-        this.children.add(valueButton);
+        this.children.add(button);
     }
 
     @Override
     public void render(GuiGraphics guiGraphics, int index, int yPos, int xPos, int entryWidth, int entryHeight,
                        int mouseX, int mouseY, boolean hovered, float partialTick) {
-        valueButton.setX(xPos + (entryWidth / 2) - 75);
-        valueButton.setY(yPos);
+        button.setX(xPos + (entryWidth / 2) - 75);
+        button.setY(yPos);
 
-        valueButton.render(guiGraphics, mouseX, mouseY, partialTick);
+        button.render(guiGraphics, mouseX, mouseY, partialTick);
     }
+
+    public abstract String valueToString();
 
     @Override
     public void saveChangedValue() {}

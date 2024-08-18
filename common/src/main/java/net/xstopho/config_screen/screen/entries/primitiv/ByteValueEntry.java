@@ -14,13 +14,13 @@ public class ByteValueEntry extends ValueEntry<Byte> {
 
     private final EditBox editBox;
 
-    private final Pattern BYTE_PATTERN = Pattern.compile("^(?:-?(?:12[0-7]|1[01][0-9]|[1-9]?[0-9])|-)?$");
+    private final Pattern bytePattern = Pattern.compile("^(?:-?(?:12[0-7]|1[01][0-9]|[1-9]?[0-9])|-)?$");
 
     public ByteValueEntry(Component entryLabel, @Nullable Component entryTooltip, TestConfigEntry<Byte> entry) {
         super(entryLabel, entryTooltip, entry);
 
         this.editBox = new EditBox(getFont(), 0, 0, getValueWidgetWidth(), 18, Component.literal(""));
-        this.editBox.setFilter(value -> BYTE_PATTERN.matcher(value).matches());
+        this.editBox.setFilter(value -> bytePattern.matcher(value).matches());
         this.editBox.setValue(entry.getConfigValue().toString());
         this.editBox.setResponder(value -> setUndoState(!Objects.equals(value, entry.getConfigValue().toString())));
 

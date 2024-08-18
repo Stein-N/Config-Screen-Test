@@ -14,13 +14,13 @@ public class DoubleValueEntry extends ValueEntry<Double> {
 
     private final EditBox editBox;
 
-    private final Pattern DOUBLE_PATTERN = Pattern.compile("[0-9]{0,10}(\\.[0-9]{0,10})?");
+    private final Pattern doublePattern = Pattern.compile("[0-9]{0,10}(\\.[0-9]{0,10})?");
 
     public DoubleValueEntry(Component entryLabel, @Nullable Component entryTooltip, TestConfigEntry<Double> entry) {
         super(entryLabel, entryTooltip, entry);
 
         this.editBox = new EditBox(getFont(), 0, 0, getValueWidgetWidth(), 18, Component.literal(""));
-        this.editBox.setFilter(value -> DOUBLE_PATTERN.matcher(value).matches());
+        this.editBox.setFilter(value -> doublePattern.matcher(value).matches());
         this.editBox.setValue(entry.getConfigValue().toString());
         this.editBox.setResponder(value -> setUndoState(!Objects.equals(value, entry.getConfigValue().toString())));
 

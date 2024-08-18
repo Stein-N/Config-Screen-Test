@@ -6,7 +6,7 @@ import net.minecraft.client.gui.components.tabs.Tab;
 import net.minecraft.client.gui.navigation.ScreenRectangle;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
-import net.xstopho.config_screen.screen.components.CategoryEntryList;
+import net.xstopho.config_screen.screen.widgets.CategoryEntryList;
 import net.xstopho.config_screen.screen.entries.base.BaseEntry;
 
 import java.util.List;

@@ -14,13 +14,13 @@ public class LongValueEntry extends ValueEntry<Long> {
 
     private final EditBox editBox;
 
-    private final Pattern LONG_PATTERN = Pattern.compile("[0-9]{0,15}");
+    private final Pattern longPattern = Pattern.compile("[0-9]{0,15}");
 
     public LongValueEntry(Component entryLabel, @Nullable Component entryTooltip, TestConfigEntry<Long> entry) {
         super(entryLabel, entryTooltip, entry);
 
         this.editBox = new EditBox(getFont(), 0, 0, getValueWidgetWidth(), 18, Component.literal(""));
-        this.editBox.setFilter(value -> LONG_PATTERN.matcher(value).matches());
+        this.editBox.setFilter(value -> longPattern.matcher(value).matches());
         this.editBox.setValue(entry.getConfigValue().toString());
         this.editBox.setResponder(value -> setUndoState(!Objects.equals(value, entry.getConfigValue().toString())));
 

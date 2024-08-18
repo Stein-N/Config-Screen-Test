@@ -10,6 +10,7 @@ import net.minecraft.client.gui.layouts.LinearLayout;
 import net.minecraft.client.gui.navigation.ScreenRectangle;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
+import net.xstopho.config_screen.ConfigScreenConstants;
 import net.xstopho.config_screen.helper.ConfigEntryCreator;
 import net.xstopho.config_screen.screen.entries.base.BaseEntry;
 import net.xstopho.config_screen.screen.tabs.CategoryTab;
@@ -26,9 +27,9 @@ public class ModConfigScreen extends Screen {
     private final TabManager tabManager;
     private TabNavigationBar tabNavigationBar;
 
-    private final Component saveComponent = Component.translatable("screen-test.components.footer.save.label");
-    private final Component closeComponent = Component.translatable("screen-test.components.footer.close.label");
-    private final Component resetComponent = Component.translatable("screen-test.components.footer.reset.label");
+    private final Component saveComponent = ConfigScreenConstants.SAVE_AND_CLOSE;
+    private final Component closeComponent = ConfigScreenConstants.CLOSE;
+    private final Component resetComponent = ConfigScreenConstants.RESET;
 
     private static List<BaseEntry> commonEntries = new ArrayList<>();
     private static List<BaseEntry> clientEntries = new ArrayList<>();

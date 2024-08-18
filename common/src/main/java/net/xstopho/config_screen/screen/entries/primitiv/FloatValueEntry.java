@@ -14,13 +14,13 @@ public class FloatValueEntry extends ValueEntry<Float> {
 
     private final EditBox editBox;
 
-    private final Pattern FLOAT_PATTERN = Pattern.compile("[0-9]{0,10}(\\.[0-9]{0,10})?");
+    private final Pattern floatPattern = Pattern.compile("[0-9]{0,10}(\\.[0-9]{0,10})?");
 
     public FloatValueEntry(Component entryLabel, @Nullable Component entryTooltip, TestConfigEntry<Float> entry) {
         super(entryLabel, entryTooltip, entry);
 
         this.editBox = new EditBox(getFont(), 0, 0, getValueWidgetWidth(), 18, Component.literal(""));
-        this.editBox.setFilter(value -> FLOAT_PATTERN.matcher(value).matches());
+        this.editBox.setFilter(value -> floatPattern.matcher(value).matches());
         this.editBox.setValue(entry.getConfigValue().toString());
         this.editBox.setResponder(value -> setUndoState(!Objects.equals(value, entry.getConfigValue().toString())));
 
