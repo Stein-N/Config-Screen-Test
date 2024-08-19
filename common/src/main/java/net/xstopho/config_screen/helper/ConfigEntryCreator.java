@@ -29,7 +29,8 @@ public class ConfigEntryCreator {
 
                 new CategoryEntry(Component.literal("Reference Datatypes"), Component.literal("All supported Reference Datatypes")),
 
-                new StringValueEntry(Component.literal("String Entry"), Component.literal("Dummy Tooltip"), new TestConfigEntry.StringEntry("Test String", "Edited String"))
+                new StringValueEntry(Component.literal("String Entry"), Component.literal("Dummy Tooltip"), new TestConfigEntry.StringEntry("Test String", "Edited String")),
+                new EnumValueEntry<>(Component.literal("Enum Entry"), Component.literal("Dummy Tooltip"), new TestConfigEntry.EnumConfigEntry<>(TestEnums.Items.class, TestEnums.Items.STICK, TestEnums.Items.BERRY))
         );
     }
 
@@ -69,5 +70,13 @@ public class ConfigEntryCreator {
         }
 
         return list;
+    }
+
+    private static List<String> dummyStringList() {
+        return List.of("Homefront", "World of Warcraft", "Minecraft", "Destiny 2", "Among Us", "Splitgate", "Monster Hunter: World", "XDefiant");
+    }
+
+    private static List<String> modifiedStringList() {
+        return List.of("Homefront", "World of Warcraft", "Monster Hunter: World", "XDefiant");
     }
 }

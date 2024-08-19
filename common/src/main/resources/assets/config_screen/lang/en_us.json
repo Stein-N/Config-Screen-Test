@@ -1,10 +1,11 @@
 {
   "config_screen.components.reset.label": "Reset",
+  "config_screen.components.edit.label": "Edit",
   "config_screen.components.reset.tooltip": "Reset the Value to the Default Value.",
   "config_screen.components.undo.tooltip": "Change the Value back to the Config Value.",
   "config_screen.components.boolean.enabled": "Enabled",
   "config_screen.components.boolean.disabled": "Disabled",
-  "config_screen.components.footer.save.label": "Save and Close",
+  "config_screen.components.footer.save_and_close.label": "Save and Close",
   "config_screen.components.footer.close.label": "Close",
-  "config_screen.components.footer.reset.label": "Reset all"
+  "config_screen.components.footer.reset_all.label": "Reset all"
 }

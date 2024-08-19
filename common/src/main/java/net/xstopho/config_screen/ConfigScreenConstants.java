@@ -14,10 +14,12 @@ public class ConfigScreenConstants {
 	public static final int HEADER_HEIGHT = 22;
 	public static final int FOOTER_HEIGHT = 34;
 
-	public static final Component SAVE_AND_CLOSE = Component.translatable("config_screen.components.footer.save.label");
+	public static final Component SAVE_AND_CLOSE = Component.translatable("config_screen.components.footer.save_and_close.label");
 	public static final Component CLOSE = Component.translatable("config_screen.components.footer.close.label");
-	public static final Component RESET = Component.translatable("config_screen.components.footer.reset.label");
+	public static final Component RESET = Component.translatable("config_screen.components.reset.label");
+	public static final Component RESET_ALL = Component.translatable("config_screen.components.footer.reset_all.label");
 	public static final Component UNDO = Component.literal("");
+	public static final Component EDIT = Component.translatable("config_screen.components.edit.label");
 
 	public static final Component RESET_TOOLTIP = Component.translatable("config_screen.components.reset.tooltip");
 	public static final Component UNDO_TOOLTIP = Component.translatable("config_screen.components.undo.tooltip");

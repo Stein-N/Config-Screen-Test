@@ -1,6 +1,7 @@
 package net.xstopho.config_screen.screen.widgets;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.ContainerObjectSelectionList;
 import net.xstopho.config_screen.screen.entries.base.BaseEntry;
 
@@ -10,6 +11,9 @@ public class CategoryEntryList extends ContainerObjectSelectionList<BaseEntry> {
         super(minecraft, width, contentHeight, headerHeight, itemSpacing);
         entries.forEach(this::addEntry);
     }
+
+    @Override
+    protected void renderListSeparators(GuiGraphics guiGraphics) {}
 
     @Override
     public int getRowWidth() {

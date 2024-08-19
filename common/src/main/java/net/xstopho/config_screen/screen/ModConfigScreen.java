@@ -29,7 +29,7 @@ public class ModConfigScreen extends Screen {
 
     private final Component saveComponent = ConfigScreenConstants.SAVE_AND_CLOSE;
     private final Component closeComponent = ConfigScreenConstants.CLOSE;
-    private final Component resetComponent = ConfigScreenConstants.RESET;
+    private final Component resetComponent = ConfigScreenConstants.RESET_ALL;
 
     private static List<BaseEntry> commonEntries = new ArrayList<>();
     private static List<BaseEntry> clientEntries = new ArrayList<>();

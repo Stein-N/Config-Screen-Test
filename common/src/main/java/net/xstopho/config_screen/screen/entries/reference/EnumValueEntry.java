@@ -54,14 +54,14 @@ public class EnumValueEntry<T extends Enum<T>> extends ValueEntry<T> {
     }
 
     private List<BaseEntry> createEntries() {
-        List<BaseEntry> list = new LinkedList<>();
+        List<BaseEntry> entries = new LinkedList<>();
 
         for (Enum<T> value : entry.getEnumValues()) {
             //TODO: Tooltip will be come from the ConfigEntry
-            list.add(new EnumSelectionEntry<>(currentScreen, Component.literal(value.toString()), Component.literal("Description for " + value), editBox, value));
+            entries.add(new EnumSelectionEntry<>(currentScreen, Component.literal(value.toString()), Component.literal("Description for " + value), editBox, value));
         }
 
-        return list;
+        return entries;
     }
 
     @Override
