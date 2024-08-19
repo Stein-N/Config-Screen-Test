@@ -1,8 +1,9 @@
-package net.xstopho.config_screen.screen.entries.selection;
+package net.xstopho.config_screen.screen.entries.selection.single;
 
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
+import net.xstopho.config_screen.screen.entries.selection.single.base.SingleSelectionEntry;
 
 public class EnumSelectionEntry<T extends Enum<T>> extends SingleSelectionEntry {
 

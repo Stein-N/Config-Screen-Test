@@ -1,5 +1,7 @@
 package net.xstopho.config_screen.config;
 
+import net.minecraft.world.item.Item;
+
 import java.util.List;
 import java.util.function.Supplier;
 
@@ -108,8 +110,8 @@ public class TestConfigEntry<T> implements Supplier<T> {
         }
     }
 
-    public static class ListConfigEntry extends TestConfigEntry<List<?>> {
-        public ListConfigEntry(List<?> defaultValue, List<?> configValue) {
+    public static class ItemListConfigEntry extends TestConfigEntry<List<Item>> {
+        public ItemListConfigEntry(List<Item> defaultValue, List<Item> configValue) {
             super(defaultValue, configValue);
         }
     }

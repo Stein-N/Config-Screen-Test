@@ -36,7 +36,7 @@ public class BooleanValueEntry extends ValueEntry<Boolean> {
 
         entryButton.setX(xPos + entryWidth - getValueWidgetWidth());
         entryButton.setY(yPos);
-        entryButton.setWidth(getValueWidgetWidth() - (undoButton.getWidth() + resetButton.getWidth()));
+        entryButton.setWidth(getCorrectedWidgetWidth());
 
         entryButton.render(guiGraphics, mouseX, mouseY, partialTick);
     }

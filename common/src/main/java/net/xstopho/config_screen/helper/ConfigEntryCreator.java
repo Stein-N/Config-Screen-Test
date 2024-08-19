@@ -1,12 +1,15 @@
 package net.xstopho.config_screen.helper;
 
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 import net.xstopho.config_screen.config.TestConfigEntry;
 import net.xstopho.config_screen.config.TestEnums;
 import net.xstopho.config_screen.screen.entries.CategoryEntry;
 import net.xstopho.config_screen.screen.entries.base.BaseEntry;
 import net.xstopho.config_screen.screen.entries.primitiv.*;
 import net.xstopho.config_screen.screen.entries.reference.EnumValueEntry;
+import net.xstopho.config_screen.screen.entries.reference.ItemListValueEntry;
 import net.xstopho.config_screen.screen.entries.reference.StringValueEntry;
 
 import java.util.ArrayList;
@@ -30,7 +33,8 @@ public class ConfigEntryCreator {
                 new CategoryEntry(Component.literal("Reference Datatypes"), Component.literal("All supported Reference Datatypes")),
 
                 new StringValueEntry(Component.literal("String Entry"), Component.literal("Dummy Tooltip"), new TestConfigEntry.StringEntry("Test String", "Edited String")),
-                new EnumValueEntry<>(Component.literal("Enum Entry"), Component.literal("Dummy Tooltip"), new TestConfigEntry.EnumConfigEntry<>(TestEnums.Items.class, TestEnums.Items.STICK, TestEnums.Items.BERRY))
+                new EnumValueEntry<>(Component.literal("Enum Entry"), Component.literal("Dummy Tooltip"), new TestConfigEntry.EnumConfigEntry<>(TestEnums.Items.class, TestEnums.Items.STICK, TestEnums.Items.BERRY)),
+                new ItemListValueEntry(Component.literal("Item List Entry"), Component.literal("Dummy Tooltip"), new TestConfigEntry.ItemListConfigEntry(createItemList(), createModifiedItemList()))
         );
     }
 
@@ -70,6 +74,14 @@ public class ConfigEntryCreator {
         }
 
         return list;
+    }
+
+    public static List<Item> createItemList() {
+        return List.of(Items.ANDESITE, Items.DIORITE, Items.DIAMOND_AXE, Items.DIAMOND, Items.NETHERITE_SWORD);
+    }
+
+    public static List<Item> createModifiedItemList() {
+        return List.of(Items.ANDESITE, Items.DIORITE, Items.DIAMOND_AXE);
     }
 
     private static List<String> dummyStringList() {

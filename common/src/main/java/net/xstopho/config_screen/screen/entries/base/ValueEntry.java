@@ -42,7 +42,6 @@ public abstract class ValueEntry<T> extends BaseEntry {
     @Override
     public void render(GuiGraphics guiGraphics, int index, int yPos, int xPos, int entryWidth, int entryHeight,
                        int mouseX, int mouseY, boolean hovered, float partialTick) {
-
         drawStringWithTooltip(guiGraphics, entryLabel, entryTooltip, xPos, yPos + 6, mouseX, mouseY, hovered);
 
         undoButton.setX(xPos + entryWidth - undoButton.getWidth() - resetButton.getWidth());
@@ -57,8 +56,12 @@ public abstract class ValueEntry<T> extends BaseEntry {
         guiGraphics.blit(undoSprite, undoButton.getX() + 2, undoButton.getY() + 2, 0.0F, 0.0F, 16, 16, 16, 16);
     }
 
-    public int getValueWidgetWidth() {
+    protected int getValueWidgetWidth() {
         return valueWidgetWidth;
+    }
+
+    protected int getCorrectedWidgetWidth() {
+        return getValueWidgetWidth() - (undoButton.getWidth() + resetButton.getWidth()) - 1;
     }
 
     protected void setUndoState(boolean bool) {

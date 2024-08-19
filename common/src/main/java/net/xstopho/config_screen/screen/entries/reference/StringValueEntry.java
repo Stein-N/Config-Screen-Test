@@ -36,7 +36,7 @@ public class StringValueEntry extends ValueEntry<String> {
         editBox.setX(xPos + entryWidth - (getValueWidgetWidth() + 50));
         editBox.setY(yPos + 1);
 
-        editBox.setWidth((getValueWidgetWidth() + 50) - (undoButton.getWidth() + resetButton.getWidth()) - 1);
+        editBox.setWidth(getCorrectedWidgetWidth() + 50);
 
         editBox.render(guiGraphics, mouseX, mouseY, partialTick);
     }

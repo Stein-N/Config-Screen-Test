@@ -49,6 +49,10 @@ public abstract class BaseEntry extends ContainerObjectSelectionList.Entry<BaseE
         return font;
     }
 
+    @Override
+    public abstract void render(GuiGraphics guiGraphics, int index, int yPos, int xPos, int entryWidth, int entryHeight,
+                       int mouseX, int mouseY, boolean hovered, float partialTick);
+
     public abstract void saveChangedValue();
 
     public abstract void undoChanges();

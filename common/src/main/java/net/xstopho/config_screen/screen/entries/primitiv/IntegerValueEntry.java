@@ -37,7 +37,7 @@ public class IntegerValueEntry extends ValueEntry<Integer> {
         editBox.setX(xPos + entryWidth - getValueWidgetWidth());
         editBox.setY(yPos + 1);
 
-        editBox.setWidth(getValueWidgetWidth() - (undoButton.getWidth() + resetButton.getWidth()) - 1);
+        editBox.setWidth(getCorrectedWidgetWidth());
 
         editBox.render(guiGraphics, mouseX, mouseY, partialTick);
     }

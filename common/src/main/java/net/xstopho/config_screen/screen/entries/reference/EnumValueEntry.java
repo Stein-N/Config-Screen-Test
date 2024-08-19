@@ -9,7 +9,7 @@ import net.xstopho.config_screen.config.TestConfigEntry;
 import net.xstopho.config_screen.screen.SingleSelectionScreen;
 import net.xstopho.config_screen.screen.entries.base.BaseEntry;
 import net.xstopho.config_screen.screen.entries.base.ValueEntry;
-import net.xstopho.config_screen.screen.entries.selection.EnumSelectionEntry;
+import net.xstopho.config_screen.screen.entries.selection.single.EnumSelectionEntry;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.LinkedList;
@@ -18,9 +18,10 @@ import java.util.Objects;
 
 public class EnumValueEntry<T extends Enum<T>> extends ValueEntry<T> {
 
+    private final Screen configScreen = Minecraft.getInstance().screen;
     private final TestConfigEntry.EnumConfigEntry<T> entry;
+
     private final EditBox editBox;
-    private final Screen currentScreen = Minecraft.getInstance().screen;
 
     public EnumValueEntry(Component entryLabel, @Nullable Component entryTooltip, TestConfigEntry.EnumConfigEntry<T> entry) {
         super(entryLabel, entryTooltip, entry);
@@ -38,18 +39,16 @@ public class EnumValueEntry<T extends Enum<T>> extends ValueEntry<T> {
                        int mouseX, int mouseY, boolean hovered, float partialTick) {
         super.render(guiGraphics, index, yPos, xPos, entryWidth, entryHeight, mouseX, mouseY, hovered, partialTick);
 
-        drawStringWithTooltip(guiGraphics, entryLabel, entryTooltip, xPos, yPos + 6, mouseX, mouseY, hovered);
-
-        editBox.setX(xPos + entryWidth - getValueWidgetWidth() - 50);
+        editBox.setX(xPos + entryWidth - getValueWidgetWidth());
         editBox.setY(yPos + 1);
-        editBox.setWidth(getValueWidgetWidth() + 50 - (undoButton.getWidth() + resetButton.getWidth()) - 1);
+        editBox.setWidth(getValueWidgetWidth() - (undoButton.getWidth() + resetButton.getWidth()) - 1);
         this.editBox.setResponder(string -> setUndoState(!Objects.equals(string, entry.getConfigValue().toString())));
 
         editBox.render(guiGraphics, mouseX, mouseY, partialTick);
 
         if (editBox.isFocused()) {
             editBox.setFocused(false);
-            Minecraft.getInstance().setScreen(new SingleSelectionScreen(currentScreen, this.entryLabel, createEntries()));
+            Minecraft.getInstance().setScreen(new SingleSelectionScreen(configScreen, this.entryLabel, createEntries()));
         }
     }
 
@@ -58,7 +57,7 @@ public class EnumValueEntry<T extends Enum<T>> extends ValueEntry<T> {
 
         for (Enum<T> value : entry.getEnumValues()) {
             //TODO: Tooltip will be come from the ConfigEntry
-            entries.add(new EnumSelectionEntry<>(currentScreen, Component.literal(value.toString()), Component.literal("Description for " + value), editBox, value));
+            entries.add(new EnumSelectionEntry<>(configScreen, Component.literal(value.toString()), Component.literal("Description for " + value), editBox, value));
         }
 
         return entries;

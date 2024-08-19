@@ -1,4 +1,4 @@
-package net.xstopho.config_screen.screen.entries.selection;
+package net.xstopho.config_screen.screen.entries.selection.single.base;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
