@@ -18,6 +18,13 @@ public class ItemListValueEntry extends ValueEntry<List<Item>> {
     private final Button button;
     private final Screen configScreen = Minecraft.getInstance().screen;
 
+    //TODO:
+    // MultiSelectEntry base class
+    // ItemMultiSelectEntry -> <init>(Component, Item, List<Item>2x?)
+    //    Methods:
+    //        -> getItem
+    //        -> isSelected
+
     public ItemListValueEntry(Component entryLabel, @Nullable Component entryTooltip, TestConfigEntry<List<Item>> entry) {
         super(entryLabel, entryTooltip, entry);
 

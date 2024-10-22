@@ -5,7 +5,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
-import net.minecraft.client.gui.components.Checkbox;
 import net.minecraft.client.gui.layouts.HeaderAndFooterLayout;
 import net.minecraft.client.gui.layouts.LinearLayout;
 import net.minecraft.client.gui.screens.Screen;
@@ -46,8 +45,8 @@ public class MultiSelectionScreen extends Screen {
         this.layout.visitWidgets(this::addRenderableWidget);
         this.list.visitWidgets(this::addRenderableWidget);
 
-        this.layout.arrangeElements();
         this.list.setRectangle(this.width, this.height - (headerHeight + footerHeight), 0, headerHeight);
+        this.layout.arrangeElements();
     }
 
     @Override
